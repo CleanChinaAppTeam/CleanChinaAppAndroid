@@ -1,4 +1,4 @@
-package com.dennytech.cleanchina.loading.view;
+package com.cleanchina.loading.view;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,6 +16,8 @@ public class LoadingWaveView extends View {
 
 	private static final int PERIOD = 10;
 	private Bitmap waveBmp;
+	private Bitmap bigBubble;
+	private Bitmap smallBubble;
 	private Timer timer;
 
 	private LoadingHandler loadingHandler;
@@ -36,6 +38,12 @@ public class LoadingWaveView extends View {
 		if (waveBmp != null) {
 			waveBmp.recycle();
 		}
+		if (bigBubble != null) {
+			bigBubble.recycle();
+		}
+		if (smallBubble != null) {
+			smallBubble.recycle();
+		}
 		super.onDetachedFromWindow();
 	}
 
@@ -43,6 +51,8 @@ public class LoadingWaveView extends View {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		waveBmp = decodeBmp(R.drawable.loading_waves);
+		bigBubble = decodeBmp(R.drawable.loading_big_bubble);
+		smallBubble = decodeBmp(R.drawable.loading_small_bubble);
 	}
 
 	private Bitmap decodeBmp(int drawable) {
@@ -74,16 +84,22 @@ public class LoadingWaveView extends View {
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		spendTime += PERIOD;
-		
+
 		int viewWidth = getWidth();
-		int imageWidth = waveBmp.getWidth();
+		int viewHeight = getHeight();
+		int waveWidth = waveBmp.getWidth();
+		int bubbleWidth = bigBubble.getWidth();
 
 		double percent = (double) spendTime / totalTime;
-		
-		int left = (int) ((imageWidth - viewWidth + 300) * percent);
-		canvas.drawBitmap(waveBmp, -left, 0, null);
-		
-		if (totalTime < spendTime || (imageWidth - left) < (viewWidth - 130)) {
+
+		int left = (int) ((waveWidth - viewWidth + 300) * percent);
+		canvas.drawBitmap(waveBmp, -left, -15, null);
+		canvas.drawBitmap(bigBubble, (viewWidth - bubbleWidth) / 2,
+				(int) (viewHeight - viewHeight * percent), null);
+		canvas.drawBitmap(smallBubble, (viewWidth - bubbleWidth) / 2,
+				(int) (viewHeight - viewHeight * (percent + 0.15)), null);
+
+		if (totalTime < spendTime || (waveWidth - left) < (viewWidth - 120)) {
 			stopAnimation();
 			loadingHandler.onLoading(100, 100);
 			return;

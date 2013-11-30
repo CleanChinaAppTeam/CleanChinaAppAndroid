@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" >
 
-        <com.dennytech.cleanchina.loading.view.LoadingWaveView
+        <com.cleanchina.loading.view.LoadingWaveView
             android:id="@+id/loading_wave"
             android:layout_width="240dp"
             android:layout_height="170dp"

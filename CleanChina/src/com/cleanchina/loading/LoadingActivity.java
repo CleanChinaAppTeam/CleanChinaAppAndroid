@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.cleanchina.R;
@@ -15,13 +16,17 @@ public class LoadingActivity extends CCActivity implements LoadingHandler {
 
 	private LoadingWaveView waveView;
 	private TextView percentView;
-	
+
 	private Handler forwardHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://home")));
 			finish();
 		};
+	};
+
+	protected int customTitleType() {
+		return Window.FEATURE_NO_TITLE;
 	};
 
 	@Override

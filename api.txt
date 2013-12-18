@@ -1,0 +1,62 @@
+http://192.168.11.214:8091/login
+request数据：
+
+{
+    identication: {
+        "type" : "basic",
+        "password" : "test123",
+        "username" : "admin",
+        "imei" : "0a97e52754b3a3c02967e85778bfb2f701152020d71e7980db5d5f810d5177a6",
+        "info" : "systemVersion:7.0.3;systemModel:iPad",
+        "version" : "1.2" 
+    },
+    data: {}
+}
+success response：
+
+{"code":0,"message":"OK","data":{"session_id":"33c14c17-a190-407c-89ae-a7cb94616372"}}
+fail response：
+
+{"code":-3,"message":"username or password wrong"}
+or
+{"code":-3,"message":"IMEI doesn't match"}
+
+
+朱超  15:54:01
+http://www.dozer.cc/2013/06/ios-certificates-and-push-notifications-certificates/
+茶杯/kf  09:26:59
+data =     {
+        content = "\U4e01\U4e4b\U6c5f";
+        "cust_id" = 108;
+        "for_mutiple_recievers" =         (
+            6,
+            0,
+                        (
+                3
+            )
+        );
+        type = R;
+    };
+朱超  12:41:03
+{'plan_status': 'D', 'origin_plan': False, 'group': 1, 'position_id': 2, 'section': 2, 'plan_visit_date': '2013-11-28', 'disease': False, 'comments': False, 'visit_purposes': [[6, False, [1, 2, 3]]], 'parent_id': 1282, 'cust_id': 1286, 'plan_type': 'F', 'assitant': 1, 'emp_id': 2, 'plan_category': 1, 'inviter': False, 'calendar_week': 201348}
+朱超  16:28:06
+{'res_def': {u'\u4f1a\u8bae\u9080\u8bf7': [{'name': u'\u5b8c\u6210', 'id': 3}, {'name': u'\u672a\u5b8c\u6210', 'id': 4}], u'\u5f00\u53d1': [{'name': u'\u8ba4\u53ef', 'id': 1}, {'name': u'\u4e0d\u8ba4\u53ef', 'id': 2}]}, 'tips': 'hello', 'visit_result': [{'result': [2, u'\u4e0d\u8ba4\u53ef'], 'id': 7, 'purpose': [5, u'\u5f00\u53d1']}, {'result': [3, u'\u5b8c\u6210'], 'id': 8, 'purpose': [6, u'\u4f1a\u8bae\u9080\u8bf7']}], 'id': 4}
+朱超  17:11:12
+{ 'plan_visit_date': '2013-11-28', 'visit_purposes': [[6, False, [5, 7]]], 'parent_id': 1282,  'emp_id': 2, 'plan_category': 2, }
+朱超  17:11:32
+{ 'plan_visit_date': '2013-11-28', 'visit_purposes': [[6, False, [5, 7]]], 'parent_id': 1282,  'plan_category': 2, }
+朱超  18:05:34
+{'need_to_follow_up': False, 'actrul_cust': False, 'related_prods': [{'cust_resp': [{'result': 'N', 'id': 4, 'disease': [1, u'\u95e8\u8bca\u4f7f\u7528']}], 'id': 2, 'prod_type_id': [1, u'\u5bcc\u9732\u65bd(\u9897\u7c92\u5242)'], 'time': False}, {'cust_resp': [{'result': 'N', 'id': 5, 'disease': [5, u'\u5173\u8282\u53ca\u97e7\u5e26\u75db']}, {'result': 'U', 'id': 6, 'disease': [6, u'\u521b\u4f24\u5f15\u8d77\u7684\u75bc\u75db\u3001\u7259\u75db\u3001\u75db\u7ecf']}, {'result': 'F', 'id': 7, 'disease': [7, u'\u6d41\u611f\u5f15\u8d77\u7684\u53d1\u70ed']}], 'id': 3, 'prod_type_id': [5, u'\u53f8\u767e\u5f97'], 'time': False}], 'hospital': [1282, u'\u4e0a\u6d77\u4e2d\u533b\u836f\u5927\u5b66\u9644\u5c5e\u66d9\u5149\u533b\u9662'], 'doctor': [1286, u'\u6768\u5149\u8f89'], 'is_right_person': False, 'visit_purposes': [u'\u5f00\u53d1', u'\u4e13\u4e1a\u4fe1\u606f\u4f20\u9012', u'\u5176\u4ed6'], 'is_training': False, 'actrul_mobile': False, 'id': 2, 'action_items': False, 'doc_usages': [], 'tips': False, 'actrul_name': False}
+茶杯/kf  18:29:34
+http://tool.chinaz.com/Tools/Unicode.aspx
+茶杯/kf  18:29:43
+'need_to_follow_up': False, 'actrul_cust': False, 'related_prods': [{'cust_resp': [{'result': 'N', 'id': 4, 'disease': [1, u'门诊使用']}], 'id': 2, 'prod_type_id': [1, u'富露施(颗粒剂)'], 'time': False}, {'cust_resp': [{'result': 'N', 'id': 5, 'disease': [5, u'关节及韧带痛']}, {'result': 'U', 'id': 6, 'disease': [6, u'创伤引起的疼痛、牙痛、痛经']}, {'result': 'F', 'id': 7, 'disease': [7, u'流感引起的发热']}], 'id': 3, 'prod_type_id': [5, u'司百得'], 'time': False}], 'hospital': [1282, u'上海中医药大学附属曙光医院'], 'doctor': [1286, u'杨光辉'], 'is_right_person': False, 'visit_purposes': [u'开发', u'专业信息传递', u'其他'], 'is_training': False, 'actrul_mobile': False, 'id': 2, 'action_items': False, 'doc_usages': [], 'tips': False, 'actrul_name': False}
+朱超  10:06:28
+{'need_to_follow_up': False, 'prod_type_def': [{'name': u'富露施(颗粒剂)', 'id': 1}, {'name': u'富露施(片剂)', 'id': 2}, {'name': u'富露施(雾化剂)', 'id': 3}, {'name': u'美乐力', 'id': 4}, {'name': u'司百得', 'id': 5}], 'actrul_cust': False, 'related_prods': [{'cust_resp': [{'result': 'N', 'id': 4, 'disease': [1, u'门诊使用']}], 'id': 2, 'prod_type_id': [1, u'富露施(颗粒剂)'], 'time': False}, {'cust_resp': [{'result': 'N', 'id': 5, 'disease': [5, u'关节及韧带痛']}, {'result': 'U', 'id': 6, 'disease': [6, u'创伤引起的疼痛、牙痛、痛经']}, {'result': 'F', 'id': 7, 'disease': [7, u'流感引起的发热']}], 'id': 3, 'prod_type_id': [5, u'司百得'], 'time': False}], 'section': [2, u'风湿科'], 'action_items': False, 'is_right_person': False, 'visit_purposes': [u'开发', u'专业信息传递', u'其他'], 'parent_id': [1282, u'上海中医药大学附属曙光医院'], 'cust_id': [1286, u'杨光辉'], 'is_training': False, 'actrul_mobile': False, 'tips': False, 'doc_usages': [], 'id': 2, 'actrul_name': False}
+朱超  11:57:56
+http://202.91.228.152/zambon/zambon02/doc/DOC000001.pdf
+茶杯/kf  16:27:41
+http://42.121.12.85:8069/?db=nexttao#id=2&view_type=form&model=hr.applicant&menu_id=376&action=342
+朱超  11:07:23
+3EDD55CC-552C-4C84-801A-166EEFB734EA
+  以上是聊天历史记录  

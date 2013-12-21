@@ -28,6 +28,7 @@
             android:layout_height="wrap_content" >
 
             <ImageView
+                android:id="@+id/meeting_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -61,6 +62,97 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="28dp"
                 android:src="@drawable/bg_branch" />
+
+            <TextView
+                android:id="@+id/meeting_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="84dp"
+                android:layout_marginTop="12dp"
+                android:drawableTop="@drawable/ic_meeting_about"
+                android:gravity="center_horizontal"
+                android:text="关于展会"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="83dp"
+                android:layout_marginTop="72dp"
+                android:drawableTop="@drawable/ic_meeting_map"
+                android:gravity="center_horizontal"
+                android:text="展位平面图"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_audience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="84dp"
+                android:layout_marginTop="126dp"
+                android:drawableTop="@drawable/ic_meeting_audience"
+                android:gravity="center_horizontal"
+                android:text="观众登记"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="83dp"
+                android:layout_marginTop="186dp"
+                android:drawableTop="@drawable/ic_meeting_search"
+                android:gravity="center_horizontal"
+                android:text="展会查询"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_award"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="84dp"
+                android:layout_marginTop="240dp"
+                android:drawableTop="@drawable/ic_meeting_award"
+                android:gravity="center_horizontal"
+                android:text="金钻奖"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_even"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="83dp"
+                android:layout_marginTop="300dp"
+                android:drawableTop="@drawable/ic_meeting_even"
+                android:gravity="center_horizontal"
+                android:text="论坛活动"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/meeting_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="84dp"
+                android:layout_marginTop="354dp"
+                android:drawableTop="@drawable/ic_meeting_cost"
+                android:gravity="center_horizontal"
+                android:text="聚划算"
+                android:textColor="@color/text_gray"
+                android:textSize="14dp" />
         </FrameLayout>
     </LinearLayout>
 

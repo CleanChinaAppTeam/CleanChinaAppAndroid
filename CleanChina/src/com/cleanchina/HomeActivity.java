@@ -3,6 +3,7 @@ package com.cleanchina;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -51,6 +52,18 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://meeting")));
 		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			this.startActivity(intent);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

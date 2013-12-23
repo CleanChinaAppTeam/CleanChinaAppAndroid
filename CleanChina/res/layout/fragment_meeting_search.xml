@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/meeting_search_input"
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_search_bg"
+            android:drawableLeft="@drawable/ic_search"
+            android:gravity="center_vertical"
+            android:textSize="12dp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/meeting_search_cb_az"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_search_option"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@null"
+                android:gravity="center"
+                android:text="A-Z"
+                android:textColor="@android:color/white"
+                android:textSize="12dp" />
+
+            <RadioButton
+                android:id="@+id/meeting_search_cb_product"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_search_option"
+                android:button="@null"
+                android:drawableLeft="@null"
+                android:text="按产品"
+                android:textColor="@android:color/white"
+                android:textSize="12dp" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

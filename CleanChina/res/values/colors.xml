@@ -2,6 +2,7 @@
 <resources>
     <color name="loading_back">#0082be</color>
     <color name="bg_blue">#0eaffb</color>
+    <color name="bg_gray">#bcbcbc</color>
     <color name="text_gray">#ababab</color>
     <color name="text_deep_gray">#99000000</color>
     <color name="text_white_normal">#a6ffffff</color>

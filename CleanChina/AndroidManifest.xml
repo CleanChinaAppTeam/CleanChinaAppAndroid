@@ -64,10 +64,9 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.cleanchina.meeting.MeetingDetailActivity"
-            android:label="meetingtab" >
+            android:label="detail" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -76,6 +75,20 @@
 
                 <data
                     android:host="detail"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cleanchina.register.RegisterActivity"
+            android:label="register" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="register"
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>

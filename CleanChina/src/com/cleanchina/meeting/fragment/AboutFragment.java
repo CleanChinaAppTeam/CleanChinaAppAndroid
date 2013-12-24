@@ -1,5 +1,7 @@
 package com.cleanchina.meeting.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,7 @@ import com.cleanchina.R;
 import com.cleanchina.app.CCFragment;
 import com.dennytech.common.adapter.BasicAdapter;
 
-public class AboutFragment extends CCFragment implements OnItemClickListener{
+public class AboutFragment extends CCFragment implements OnItemClickListener {
 
 	private ListView listView;
 	private Adapter adapter;
@@ -53,7 +55,8 @@ public class AboutFragment extends CCFragment implements OnItemClickListener{
 			long arg3) {
 		switch (position) {
 		case 0:
-
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("cleanchina://detail")));
 			break;
 
 		default:

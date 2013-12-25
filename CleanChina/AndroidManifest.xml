@@ -7,10 +7,18 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
+    
+    <!-- 使用网络功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:name="com.dennytech.common.app.CLApplication"
         android:label="@string/app_name"
         android:theme="@style/Theme.CC" >
         <activity
@@ -89,6 +97,20 @@
 
                 <data
                     android:host="register"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cleanchina.meeting.ImageDataActivity"
+            android:label="imagedata" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="imagedata"
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>

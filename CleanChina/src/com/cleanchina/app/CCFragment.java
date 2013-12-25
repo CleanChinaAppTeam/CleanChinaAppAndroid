@@ -6,7 +6,7 @@ import android.view.View.OnClickListener;
 
 import com.cleanchina.R;
 import com.cleanchina.widget.TitleBar;
-import com.dennytech.common.app.BDFragment;
+import com.dennytech.common.app.CLFragment;
 
 /**
  * base fragment
@@ -14,7 +14,7 @@ import com.dennytech.common.app.BDFragment;
  * @author dengjun86
  * 
  */
-public class CCFragment extends BDFragment {
+public class CCFragment extends CLFragment {
 
 	private TitleBar titleBar;
 

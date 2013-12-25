@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cleanchina.R;
 import com.cleanchina.app.CCFragment;
+import com.cleanchina.lib.Constant;
 import com.dennytech.common.adapter.BasicAdapter;
 
 public class AboutFragment extends CCFragment implements OnItemClickListener {
@@ -57,6 +58,15 @@ public class AboutFragment extends CCFragment implements OnItemClickListener {
 		case 0:
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://detail")));
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("cleanchina://imagedata?title=" + menus[position]
+							+ "&url=" + Constant.DOMAIN + "expo" + position)));
 			break;
 
 		default:

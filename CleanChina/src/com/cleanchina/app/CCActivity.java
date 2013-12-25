@@ -1,6 +1,5 @@
 package com.cleanchina.app;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -8,8 +7,9 @@ import android.view.Window;
 
 import com.cleanchina.R;
 import com.cleanchina.widget.TitleBar;
+import com.dennytech.common.app.CLActivity;
 
-public class CCActivity extends FragmentActivity {
+public class CCActivity extends CLActivity {
 	
 	private TitleBar titleBar;
 

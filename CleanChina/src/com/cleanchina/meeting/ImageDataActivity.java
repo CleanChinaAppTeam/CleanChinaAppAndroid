@@ -9,6 +9,7 @@ import com.cleanchina.R;
 import com.cleanchina.app.CCActivity;
 import com.cleanchina.bean.ImageDataBean;
 import com.cleanchina.lib.APIRequest;
+import com.cleanchina.lib.Constant;
 import com.cleanchina.widget.NetworkPhotoView;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
@@ -77,7 +78,7 @@ public class ImageDataActivity extends CCActivity implements MApiRequestHandler 
 	@Override
 	public void onRequestFailed(MApiRequest req, MApiResponse resp) {
 		progress.setVisibility(View.GONE);
-		Toast.makeText(this, "遇到网络错误，请稍后再试", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, Constant.MSG_NET_ERROR, Toast.LENGTH_SHORT).show();
 	}
 
 }

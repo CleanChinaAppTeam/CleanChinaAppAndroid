@@ -226,7 +226,7 @@
         android:gravity="center"
         android:minHeight="44dp"
         android:padding="5dp"
-        android:text="确认注册"
+        android:text="确认登记"
         android:textColor="@android:color/white"
         android:textSize="11dp" />
 

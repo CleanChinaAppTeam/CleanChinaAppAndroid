@@ -36,7 +36,7 @@ public class APIRequest extends BasicMApiRequest {
 				defaultCacheType, resultClazz, null);
 		return r;
 	}
-
+	
 	public static MApiRequest mapiPost(String url, Class<?> resultClazz,
 			String... forms) {
 		if (forms.length % 2 != 0) {

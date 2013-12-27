@@ -11,7 +11,7 @@ public class RegisterActivity extends CCActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_register);
-		setTitle("注册");
+		setTitle("观众登记");
 	}
 	
 }

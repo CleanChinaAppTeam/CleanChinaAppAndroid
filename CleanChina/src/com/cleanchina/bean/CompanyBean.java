@@ -4,5 +4,6 @@ public class CompanyBean {
 	
 	public int companyid;
 	public String companyname;
+	public String firstchar;
 
 }

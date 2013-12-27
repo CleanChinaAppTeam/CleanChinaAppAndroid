@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@color/bg_gray"
         android:gravity="center_vertical"
+        android:focusableInTouchMode="true"
         android:padding="10dp" >
 
         <EditText
@@ -22,6 +23,7 @@
             android:textSize="12dp" />
 
         <RadioGroup
+            android:id="@+id/meeting_search_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
@@ -54,9 +56,35 @@
         </RadioGroup>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        
+        <com.cleanchina.widget.sectionlist.SectionListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.cleanchina.widget.AlphabetBar
+            android:id="@+id/sidebar"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:paddingRight="10dp" />
+
+        <ListView
+            android:id="@+id/list2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:visibility="invisible" />
+        
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </LinearLayout>

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -109,7 +111,6 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onResume() {
 		super.onResume();
 		setTitle("商展查询");
-		changeStatus(STATUS_AZ);
 	}
 
 	@Override
@@ -123,15 +124,18 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 		Object item = av.getItemAtPosition(position);
-		CompanyBean comp;
+		CompanyBean comp = null;
 		if (item instanceof CompanyBean) {
 			comp = (CompanyBean) item;
 		} else if (item instanceof SectionListItem) {
 			comp = (CompanyBean) ((SectionListItem) item).item;
 		}
 
-		// TODO
-
+		if (comp != null) {
+			startActivity(new Intent(
+					Intent.ACTION_VIEW,
+					Uri.parse("cleanchina://companydetail?id=" + comp.companyid)));
+		}
 	}
 
 	@Override
@@ -146,11 +150,11 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	private void changeStatus(int status) {
 		this.status = status;
 
-		if (status == STATUS_AZ || status == STATUS_SEARCH) {
+		if (status == STATUS_AZ) {
 			listView2.setVisibility(View.INVISIBLE);
 			listView.showTransparentView(true);
 
-		} else if (status == STATUS_PRODUCT) {
+		} else if (status == STATUS_PRODUCT || status == STATUS_SEARCH) {
 			listView2.setVisibility(View.VISIBLE);
 			listView.showTransparentView(false);
 		}

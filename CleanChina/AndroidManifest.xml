@@ -114,6 +114,20 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.cleanchina.meeting.CompanyDetailActivity"
+            android:label="companydetail" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="companydetail"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

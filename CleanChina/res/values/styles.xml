@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -19,6 +19,11 @@
 
     <style name="CustomWindowTitleBackground">
         <item name="android:background">@color/bg_blue</item>
+    </style>
+    
+    <style name="CustomListItem">
+        <item name="android:listSelector">@drawable/list_item</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
 </resources>

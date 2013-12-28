@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.cleanchina.register.view.MultiStateInputView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/multi_state_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/bg_edit"
-        android:text="试试"
-        android:textColor="@android:color/black"
-        android:textSize="15dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-    <ImageView
-        android:id="@+id/multi_state_image"
-        android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/multi_state_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/multi_state_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_right" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/multi_tips"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/ic_right" />
+        android:textColor="@color/text_gray"
+        android:textSize="9dp" />
 
 </com.cleanchina.register.view.MultiStateInputView>

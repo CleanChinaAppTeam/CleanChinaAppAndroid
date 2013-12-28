@@ -101,6 +101,12 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onResume() {
 		super.onResume();
 		setTitle("商展查询");
+		
+		if (status ==STATUS_AZ) {
+			changeStatus(STATUS_AZ);
+		} else {
+			changeStatus(STATUS_PRODUCT);
+		}
 	}
 
 	@Override
@@ -144,10 +150,12 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		if (status == STATUS_AZ) {
 			listView.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 			mIndexBar.setVisibility(View.VISIBLE);
 
 		} else if (status == STATUS_PRODUCT || status == STATUS_SEARCH) {
 			listView.setAdapter(adapter2);
+			adapter2.notifyDataSetChanged();
 			mIndexBar.setVisibility(View.INVISIBLE);
 		}
 	}

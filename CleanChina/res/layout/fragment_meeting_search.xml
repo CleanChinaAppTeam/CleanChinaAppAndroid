@@ -61,7 +61,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <com.cleanchina.widget.sectionlist.SectionListView
+        <ListView
             android:id="@+id/list"
             style="@style/CustomListItem"
             android:layout_width="match_parent"
@@ -73,13 +73,6 @@
             android:layout_height="fill_parent"
             android:layout_gravity="right"
             android:paddingRight="10dp" />
-
-        <ListView
-            android:id="@+id/list2"
-            style="@style/CustomListItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible" />
 
         <ProgressBar
             android:id="@+id/loading"

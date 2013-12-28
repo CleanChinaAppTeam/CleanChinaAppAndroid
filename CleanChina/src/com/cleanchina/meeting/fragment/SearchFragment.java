@@ -2,8 +2,9 @@ package com.cleanchina.meeting.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -31,9 +32,7 @@ import com.cleanchina.bean.CompanyListBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
 import com.cleanchina.widget.AlphabetBar;
-import com.cleanchina.widget.sectionlist.SectionListAdapter;
 import com.cleanchina.widget.sectionlist.SectionListItem;
-import com.cleanchina.widget.sectionlist.SectionListView;
 import com.dennytech.common.adapter.BasicAdapter;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
@@ -48,13 +47,11 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	private MApiRequest request;
 
 	private AlphabetBar mIndexBar;
-	private SectionListView listView;
-	private ListView listView2;
+	private ListView listView;
 	private ProgressBar loading;
 
-	private SectionListAdapter mSectionAdapter;
 	private Adapter adapter;
-	private Adapter adapter2;
+	private Adapter2 adapter2;
 
 	private int status;
 	private static final int STATUS_AZ = 0;
@@ -83,9 +80,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		});
 		group = (RadioGroup) view.findViewById(R.id.meeting_search_group);
 		group.setOnCheckedChangeListener(this);
-		listView = (SectionListView) view.findViewById(R.id.list);
+		listView = (ListView) view.findViewById(R.id.list);
 		mIndexBar = (AlphabetBar) view.findViewById(R.id.sidebar);
-		listView2 = (ListView) view.findViewById(R.id.list2);
 		loading = (ProgressBar) view.findViewById(R.id.loading);
 		return view;
 	}
@@ -94,15 +90,11 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		adapter = new Adapter();
-		mSectionAdapter = new SectionListAdapter(getActivity()
-				.getLayoutInflater(), adapter);
-		mSectionAdapter.setOnItemClickListener(this);
-		listView.setOnItemClickListener(mSectionAdapter);
+		listView.setOnItemClickListener(this);
 		mIndexBar.setListView(listView);
+		listView.setAdapter(adapter);
 
-		adapter2 = new Adapter();
-		listView2.setAdapter(adapter2);
-		listView2.setOnItemClickListener(this);
+		adapter2 = new Adapter2();
 
 		requestData(null);
 	}
@@ -151,12 +143,12 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		this.status = status;
 
 		if (status == STATUS_AZ) {
-			listView2.setVisibility(View.INVISIBLE);
-			listView.showTransparentView(true);
+			listView.setAdapter(adapter);
+			mIndexBar.setVisibility(View.VISIBLE);
 
 		} else if (status == STATUS_PRODUCT || status == STATUS_SEARCH) {
-			listView2.setVisibility(View.VISIBLE);
-			listView.showTransparentView(false);
+			listView.setAdapter(adapter2);
+			mIndexBar.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -173,8 +165,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 	class Adapter extends BasicAdapter implements SectionIndexer {
 
-		private List<SectionListItem> data = new ArrayList<SectionListItem>();
 		private List<String> sections = new ArrayList<String>();
+		private Map<String, List<CompanyBean>> data2 = new HashMap<String, List<CompanyBean>>();
 
 		public void setData(CompanyBean[] tagSections) {
 			for (CompanyBean comp : tagSections) {
@@ -193,31 +185,147 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 					}
 				}
 
-				SectionListItem item = new SectionListItem(comp, sectionName);
-				data.add(item);
+				List<CompanyBean> cbList = data2.get(sectionName);
+				if (cbList == null) {
+					cbList = new ArrayList<CompanyBean>();
+					data2.put(sectionName, cbList);
+				}
+				cbList.add(comp);
 			}
 
 			Collections.sort(sections);
-			Collections.sort(data, new Comparator<SectionListItem>() {
-
-				@Override
-				public int compare(SectionListItem lhs, SectionListItem rhs) {
-					return ((CompanyBean) (lhs.item)).firstchar
-							.compareTo(((CompanyBean) (rhs.item)).firstchar);
-				}
-			});
 
 			notifyDataSetChanged();
 		}
 
 		@Override
 		public int getCount() {
-			return data == null ? 0 : data.size();
+			int count = 0;
+			for (String section : sections) {
+				count += (data2.get(section).size() + 1);
+			}
+			return count;
 		}
 
 		@Override
-		public SectionListItem getItem(int position) {
-			return data.get(position);
+		public Object getItem(int position) {
+			int total = 0;
+			for (int i = 0; i < sections.size(); i++) {
+				String section = sections.get(i);
+				List<CompanyBean> cmps = data2.get(section);
+				total += (cmps.size() + 1);
+				if (total > position) {
+					int pos = total - position;
+					if (pos > cmps.size()) {
+						return section;
+					} else {
+						return cmps.get(cmps.size() - pos);
+					}
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public int getViewTypeCount() {
+			return 2;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			Object item = getItem(position);
+			if (item instanceof String) {
+				View view = convertView;
+				if (view == null || !"section".equals(view.getTag())) {
+					view = LayoutInflater.from(parent.getContext()).inflate(
+							R.layout.section_view, parent, false);
+				}
+				TextView tv = (TextView) view.findViewById(R.id.listTextView);
+				tv.setText((String) item);
+				view.setTag("section");
+				return view;
+
+			} else {
+				CompanyBean company = (CompanyBean) item;
+				View view = convertView;
+				if (view == null || !"company".equals(view.getTag())) {
+					view = LayoutInflater.from(parent.getContext()).inflate(
+							R.layout.layout_list_item_text14, parent, false);
+				}
+				TextView tv = (TextView) view.findViewById(R.id.text);
+				tv.setText(company.companyname);
+				tv.setTag(company);
+				view.setTag("company");
+				return view;
+			}
+		}
+
+		public void reset() {
+			data2.clear();
+			sections.clear();
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public int getPositionForSection(int section) {
+			int total = 0;
+			for (int i = 0; i < section; i++) {
+				String s = sections.get(i);
+				total += (data2.get(s).size() + 1);
+			}
+			return total;
+		}
+
+		@Override
+		public int getSectionForPosition(int position) {
+			int i;
+			int total = 0;
+			for (i = 0; i < sections.size(); i++) {
+				String section = sections.get(i);
+				total += (data2.get(section).size() + 1);
+				if (total > position) {
+					break;
+				}
+			}
+			return i;
+		}
+
+		@Override
+		public Object[] getSections() {
+			String[] sectionArray = new String[sections.size()];
+			sections.toArray(sectionArray);
+			return sectionArray;
+		}
+
+	}
+
+	class Adapter2 extends BasicAdapter {
+
+		CompanyBean[] data;
+
+		public void setData(CompanyBean[] data) {
+			this.data = data;
+			notifyDataSetChanged();
+		}
+
+		public void reset() {
+			data = null;
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public int getCount() {
+			return data == null ? 0 : data.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return data[position];
 		}
 
 		@Override
@@ -227,54 +335,17 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			CompanyBean company = (CompanyBean) getItem(position);
 			View view = convertView;
-			if (view == null) {
+			if (view == null || !"company".equals(view.getTag())) {
 				view = LayoutInflater.from(parent.getContext()).inflate(
 						R.layout.layout_list_item_text14, parent, false);
 			}
-
-			SectionListItem item = getItem(position);
-			CompanyBean company = (CompanyBean) item.item;
-
 			TextView tv = (TextView) view.findViewById(R.id.text);
 			tv.setText(company.companyname);
 			tv.setTag(company);
-
+			view.setTag("company");
 			return view;
-		}
-
-		public void reset() {
-			data.clear();
-			sections.clear();
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public int getPositionForSection(int section) {
-			for (int i = 0; i < getCount(); i++) {
-				if (sections.get(section).equals(getItem(i).section)) {
-					return i + section;
-				}
-			}
-			return 0;
-		}
-
-		@Override
-		public int getSectionForPosition(int position) {
-			SectionListItem item = getItem(position);
-			for (int i = 0; i < sections.size(); i++) {
-				if (sections.get(i).equals(item.section)) {
-					return i;
-				}
-			}
-			return 0;
-		}
-
-		@Override
-		public Object[] getSections() {
-			String[] sectionArray = new String[sections.size()];
-			sections.toArray(sectionArray);
-			return sectionArray;
 		}
 
 	}
@@ -290,10 +361,9 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
 		if (resp.result() instanceof CompanyListBean) {
-			if (status != STATUS_SEARCH) {
+			if (status == STATUS_AZ) {
 				adapter.setData(((CompanyListBean) resp.result()).data);
 				mIndexBar.setSectionIndexter(adapter);
-				listView.setAdapter(mSectionAdapter);
 			}
 			adapter2.setData(((CompanyListBean) resp.result()).data);
 		}

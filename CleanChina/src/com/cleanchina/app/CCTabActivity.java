@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cleanchina.R;
 
-public class CCTabActivity extends CCActivity {
+public class CCTabActivity extends CCActivity implements OnTabChangeListener {
 
 	protected FragmentTabHost tabHost;
 
@@ -19,6 +20,11 @@ public class CCTabActivity extends CCActivity {
 		setContentView(getContentViewResId());
 		tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+		tabHost.setOnTabChangedListener(this);
+	}
+	
+	@Override
+	public void onTabChanged(String tabId) {
 	}
 
 	protected int getContentViewResId() {

@@ -26,17 +26,26 @@
 
     <ImageView
         android:id="@+id/title_left_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
     <ImageView
         android:id="@+id/title_right_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:scaleType="center" />
+
+    <ImageView
+        android:id="@+id/title_right_btn2"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_marginRight="60dp"
+        android:scaleType="center" />
 
 </com.cleanchina.widget.TitleBar>

@@ -17,6 +17,7 @@ public class TitleBar extends FrameLayout implements
 	private View backBtn;
 	private ImageView leftBtn;
 	private ImageView rightBtn;
+	private ImageView rightBtn2;
 
 	public TitleBar(Context context) {
 		this(context, null);
@@ -33,6 +34,7 @@ public class TitleBar extends FrameLayout implements
 		backBtn = findViewById(R.id.title_back_btn);
 		leftBtn = (ImageView) findViewById(R.id.title_left_btn);
 		rightBtn = (ImageView) findViewById(R.id.title_right_btn);
+		rightBtn2 = (ImageView) findViewById(R.id.title_right_btn2);
 		backBtn.setOnClickListener(this);
 	}
 
@@ -47,8 +49,23 @@ public class TitleBar extends FrameLayout implements
 	}
 
 	public void setRightButton(int resId, OnClickListener listener) {
-		rightBtn.setImageResource(resId);
-		rightBtn.setOnClickListener(listener);
+		if (resId == 0) {
+			rightBtn.setVisibility(View.GONE);
+		} else {
+			rightBtn.setVisibility(View.VISIBLE);
+			rightBtn.setImageResource(resId);
+			rightBtn.setOnClickListener(listener);
+		}
+	}
+
+	public void setRight2Button(int resId, OnClickListener listener) {
+		if (resId == 0) {
+			rightBtn2.setVisibility(View.GONE);
+		} else {
+			rightBtn2.setVisibility(View.VISIBLE);
+			rightBtn2.setImageResource(resId);
+			rightBtn2.setOnClickListener(listener);
+		}
 	}
 
 	public void enableBackButton(boolean enable) {

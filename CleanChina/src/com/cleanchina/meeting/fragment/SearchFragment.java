@@ -101,6 +101,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onResume() {
 		super.onResume();
 		setTitle("商展查询");
+		setRightButton(0, null);
+		setRight2Button(0, null);
 		
 		if (status ==STATUS_AZ) {
 			changeStatus(STATUS_AZ);

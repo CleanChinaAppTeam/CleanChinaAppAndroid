@@ -69,6 +69,10 @@ public class CCActivity extends CLActivity {
 	public void setRightButton(int resId, OnClickListener listener) {
 		titleBar.setRightButton(resId, listener);
 	}
+	
+	public void setRight2Button(int resId, OnClickListener listener) {
+		titleBar.setRight2Button(resId, listener);
+	}
 
 	public void enableBackButton(boolean enable) {
 		titleBar.enableBackButton(enable);

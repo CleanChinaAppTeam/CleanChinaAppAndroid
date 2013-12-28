@@ -15,6 +15,8 @@ public class MapFragment extends CCFragment {
 	public void onResume() {
 		super.onResume();
 		setTitle("展位平面图");
+		setRightButton(0, null);
+		setRight2Button(0, null);
 	}
 
 }

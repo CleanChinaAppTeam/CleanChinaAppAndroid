@@ -22,6 +22,9 @@ public class CCFragment extends CLFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		titleBar = (TitleBar) view.findViewById(R.id.titlebar);
+		if (titleBar == null) {
+			titleBar = (TitleBar) getActivity().findViewById(R.id.titlebar);
+		}
 	}
 
 	public void setTitle(String title) {
@@ -34,15 +37,27 @@ public class CCFragment extends CLFragment {
 	}
 
 	public void setLeftButton(int resId, OnClickListener listener) {
-		titleBar.setLeftButton(resId, listener);
+		if (titleBar != null) {
+			titleBar.setLeftButton(resId, listener);
+		}
 	}
 
 	public void setRightButton(int resId, OnClickListener listener) {
-		titleBar.setRightButton(resId, listener);
+		if (titleBar != null) {
+			titleBar.setRightButton(resId, listener);
+		}
+	}
+
+	public void setRight2Button(int resId, OnClickListener listener) {
+		if (titleBar != null) {
+			titleBar.setRight2Button(resId, listener);
+		}
 	}
 
 	public void enableBackButton(boolean enable) {
-		titleBar.enableBackButton(enable);
+		if (titleBar != null) {
+			titleBar.enableBackButton(enable);
+		}
 	}
 
 	public void setTitle(int resId) {

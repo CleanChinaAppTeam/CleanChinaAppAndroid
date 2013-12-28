@@ -30,6 +30,17 @@ public class MeetingTabActivity extends CCTabActivity {
 		
 		setCurrentTab(getIntent().getData().getQueryParameter("tag"));
 	}
+	
+	@Override
+	public void onTabChanged(String tabId) {
+		if (tabId.equals("cost")) {
+			setRightButton(R.drawable.title_how_buy, null);
+			setRight2Button(R.drawable.title_where_buy, null);
+		} else {
+			setRightButton(0, null);
+			setRight2Button(0, null);
+		}
+	}
 
 	@Override
 	protected int getContentViewResId() {

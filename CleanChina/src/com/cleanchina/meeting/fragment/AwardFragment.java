@@ -15,6 +15,8 @@ public class AwardFragment extends CCFragment {
 	public void onResume() {
 		super.onResume();
 		setTitle("金钻奖");
+		setRightButton(0, null);
+		setRight2Button(0, null);
 	}
 	
 }

@@ -49,6 +49,8 @@ public class AboutFragment extends CCFragment implements OnItemClickListener {
 	public void onResume() {
 		super.onResume();
 		setTitle("关于展会");
+		setRightButton(0, null);
+		setRight2Button(0, null);
 	}
 
 	@Override

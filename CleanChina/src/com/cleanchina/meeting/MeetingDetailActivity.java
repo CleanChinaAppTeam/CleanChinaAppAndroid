@@ -89,6 +89,7 @@ public class MeetingDetailActivity extends CCActivity implements
 	@Override
 	public void onRequestFailed(MApiRequest req, MApiResponse resp) {
 		dismissDialog();
+		showDialog(null, resp.message().getErrorMsg(), null);
 	}
 
 }

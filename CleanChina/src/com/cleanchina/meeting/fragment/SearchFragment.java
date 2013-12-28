@@ -13,7 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -69,13 +69,11 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		View view = inflater.inflate(R.layout.fragment_meeting_search, null);
 		input = (EditText) view.findViewById(R.id.meeting_search_input);
 		input.addTextChangedListener(this);
-		input.setOnFocusChangeListener(new OnFocusChangeListener() {
-
+		input.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					changeStatus(STATUS_SEARCH);
-				}
+			public void onClick(View v) {
+				changeStatus(STATUS_SEARCH);
 			}
 		});
 		group = (RadioGroup) view.findViewById(R.id.meeting_search_group);
@@ -95,7 +93,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		listView.setAdapter(adapter);
 
 		adapter2 = new Adapter2();
-
+		changeStatus(STATUS_AZ);
 		requestData(null);
 	}
 
@@ -134,8 +132,10 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == R.id.meeting_search_cb_az) {
 			changeStatus(STATUS_AZ);
+			requestData(null);
 		} else {
 			changeStatus(STATUS_PRODUCT);
+			requestData(null);
 		}
 	}
 
@@ -166,9 +166,11 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	class Adapter extends BasicAdapter implements SectionIndexer {
 
 		private List<String> sections = new ArrayList<String>();
-		private Map<String, List<CompanyBean>> data2 = new HashMap<String, List<CompanyBean>>();
+		private Map<String, List<CompanyBean>> data = new HashMap<String, List<CompanyBean>>();
 
 		public void setData(CompanyBean[] tagSections) {
+			sections.clear();
+			data.clear();
 			for (CompanyBean comp : tagSections) {
 				String sectionName = comp.firstchar;
 				if (sectionName != null) {
@@ -185,10 +187,10 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 					}
 				}
 
-				List<CompanyBean> cbList = data2.get(sectionName);
+				List<CompanyBean> cbList = data.get(sectionName);
 				if (cbList == null) {
 					cbList = new ArrayList<CompanyBean>();
-					data2.put(sectionName, cbList);
+					data.put(sectionName, cbList);
 				}
 				cbList.add(comp);
 			}
@@ -202,7 +204,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		public int getCount() {
 			int count = 0;
 			for (String section : sections) {
-				count += (data2.get(section).size() + 1);
+				count += (data.get(section).size() + 1);
 			}
 			return count;
 		}
@@ -212,7 +214,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 			int total = 0;
 			for (int i = 0; i < sections.size(); i++) {
 				String section = sections.get(i);
-				List<CompanyBean> cmps = data2.get(section);
+				List<CompanyBean> cmps = data.get(section);
 				total += (cmps.size() + 1);
 				if (total > position) {
 					int pos = total - position;
@@ -266,7 +268,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		}
 
 		public void reset() {
-			data2.clear();
+			data.clear();
 			sections.clear();
 			notifyDataSetChanged();
 		}
@@ -276,7 +278,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 			int total = 0;
 			for (int i = 0; i < section; i++) {
 				String s = sections.get(i);
-				total += (data2.get(s).size() + 1);
+				total += (data.get(s).size() + 1);
 			}
 			return total;
 		}
@@ -287,7 +289,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 			int total = 0;
 			for (i = 0; i < sections.size(); i++) {
 				String section = sections.get(i);
-				total += (data2.get(section).size() + 1);
+				total += (data.get(section).size() + 1);
 				if (total > position) {
 					break;
 				}

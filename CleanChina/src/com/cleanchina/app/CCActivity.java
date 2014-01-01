@@ -1,5 +1,7 @@
 package com.cleanchina.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -10,7 +12,7 @@ import com.cleanchina.widget.TitleBar;
 import com.dennytech.common.app.CLActivity;
 
 public class CCActivity extends CLActivity {
-	
+
 	private TitleBar titleBar;
 
 	/**
@@ -55,7 +57,7 @@ public class CCActivity extends CLActivity {
 		titleBar = (TitleBar) findViewById(R.id.titlebar);
 		enableBackButton(true);
 	}
-	
+
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
@@ -69,13 +71,23 @@ public class CCActivity extends CLActivity {
 	public void setRightButton(int resId, OnClickListener listener) {
 		titleBar.setRightButton(resId, listener);
 	}
-	
+
 	public void setRight2Button(int resId, OnClickListener listener) {
 		titleBar.setRight2Button(resId, listener);
 	}
 
 	public void enableBackButton(boolean enable) {
 		titleBar.enableBackButton(enable);
+	}
+
+	private SharedPreferences sharePref;
+
+	public SharedPreferences preferences() {
+		if (sharePref == null) {
+			sharePref = getSharedPreferences(getPackageName(),
+					Context.MODE_PRIVATE);
+		}
+		return sharePref;
 	}
 
 }

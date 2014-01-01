@@ -1,5 +1,7 @@
 package com.cleanchina.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,5 +64,15 @@ public class CCFragment extends CLFragment {
 
 	public void setTitle(int resId) {
 		setTitle(getString(resId));
+	}
+	
+	private SharedPreferences sharePref;
+
+	public SharedPreferences preferences() {
+		if (sharePref == null) {
+			sharePref = getActivity().getSharedPreferences(getActivity().getPackageName(),
+					Context.MODE_PRIVATE);
+		}
+		return sharePref;
 	}
 }

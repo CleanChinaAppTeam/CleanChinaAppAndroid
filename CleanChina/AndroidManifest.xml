@@ -129,6 +129,21 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.cleanchina.ebook.EbookActivity"
+            android:label="companydetail" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="photopager"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -140,7 +140,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="photopager"
+                    android:host="ebookdetail"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.cleanchina.ebook.EbookListActivity"
+            android:label="companydetail" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="ebooklist"
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>

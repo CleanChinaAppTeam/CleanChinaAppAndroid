@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.cleanchina.R;
 import com.cleanchina.app.CCActivity;
 import com.cleanchina.bean.EbookBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
-import com.cleanchina.widget.HackyViewPager;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
@@ -23,6 +23,7 @@ import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 public class EbookActivity extends CCActivity implements MApiRequestHandler {
 
 	private ViewPager mViewPager;
+	private SamplePagerAdapter adapter;
 	private ProgressBar progress;
 
 	private MApiRequest request;
@@ -33,13 +34,14 @@ public class EbookActivity extends CCActivity implements MApiRequestHandler {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ebook);
 		setTitle("电子杂志");
-		
+
 		id = getIntent().getData().getQueryParameter("id");
-		
+
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		progress = (ProgressBar) findViewById(R.id.progress);
 
-		mViewPager.setAdapter(new SamplePagerAdapter());
+		adapter = new SamplePagerAdapter();
+		mViewPager.setAdapter(adapter);
 		requestData();
 	}
 
@@ -56,7 +58,7 @@ public class EbookActivity extends CCActivity implements MApiRequestHandler {
 			mapiService().abort(request, this, true);
 		}
 		request = APIRequest.mapiGet(Constant.DOMAIN + "magazine",
-				CacheType.NORMAL, EbookBean.class, "magazine_id");
+				CacheType.NORMAL, EbookBean.class, "magazine_id", id);
 		mapiService().exec(request, this);
 	}
 
@@ -66,6 +68,7 @@ public class EbookActivity extends CCActivity implements MApiRequestHandler {
 
 		public void setDate(String[] images) {
 			this.images = images;
+			notifyDataSetChanged();
 		}
 
 		@Override
@@ -101,25 +104,25 @@ public class EbookActivity extends CCActivity implements MApiRequestHandler {
 
 	@Override
 	public void onRequestStart(MApiRequest req) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onRequestProgress(MApiRequest req, int count, int total) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
-		// TODO Auto-generated method stub
-
+		progress.setVisibility(View.GONE);
+		if (resp.result() instanceof EbookBean) {
+			EbookBean ebook = (EbookBean) resp.result();
+			adapter.setDate(ebook.data.images);
+		}
 	}
 
 	@Override
 	public void onRequestFailed(MApiRequest req, MApiResponse resp) {
-		// TODO Auto-generated method stub
-
+		progress.setVisibility(View.GONE);
+		Toast.makeText(this, resp.message().getErrorMsg(), Toast.LENGTH_SHORT)
+				.show();
 	}
 }

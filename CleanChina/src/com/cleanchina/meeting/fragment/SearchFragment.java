@@ -1,7 +1,6 @@
 package com.cleanchina.meeting.fragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ import com.cleanchina.R;
 import com.cleanchina.app.CCFragment;
 import com.cleanchina.bean.CompanyBean;
 import com.cleanchina.bean.CompanyListBean;
+import com.cleanchina.bean.CompanySectionBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
 import com.cleanchina.widget.AlphabetBar;
@@ -51,7 +51,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	private ProgressBar loading;
 
 	private Adapter adapter;
-	private Adapter2 adapter2;
+	private Adapter adapter2;
 
 	private int status;
 	private static final int STATUS_AZ = 0;
@@ -70,7 +70,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		input = (EditText) view.findViewById(R.id.meeting_search_input);
 		input.addTextChangedListener(this);
 		input.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				changeStatus(STATUS_SEARCH);
@@ -92,7 +92,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		mIndexBar.setListView(listView);
 		listView.setAdapter(adapter);
 
-		adapter2 = new Adapter2();
+		adapter2 = new Adapter();
 		changeStatus(STATUS_AZ);
 		requestData(null);
 	}
@@ -103,8 +103,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		setTitle("商展查询");
 		setRightButton(0, null);
 		setRight2Button(0, null);
-		
-		if (status ==STATUS_AZ) {
+
+		if (status == STATUS_AZ) {
 			changeStatus(STATUS_AZ);
 		} else {
 			changeStatus(STATUS_PRODUCT);
@@ -175,37 +175,17 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 	class Adapter extends BasicAdapter implements SectionIndexer {
 
-		private List<String> sections = new ArrayList<String>();
-		private Map<String, List<CompanyBean>> data = new HashMap<String, List<CompanyBean>>();
+		private List<String> tagSections = new ArrayList<String>();
+		private Map<String, CompanyBean[]> data = new HashMap<String, CompanyBean[]>();
 
-		public void setData(CompanyBean[] tagSections) {
-			sections.clear();
+		public void setData(CompanySectionBean[] sections) {
+			tagSections.clear();
 			data.clear();
-			for (CompanyBean comp : tagSections) {
-				String sectionName = comp.firstchar;
-				if (sectionName != null) {
-					boolean exist = false;
-					for (int i = 0; i < sections.size(); i++) {
-						String s = sections.get(i);
-						if (s.equals(sectionName)) {
-							exist = true;
-							break;
-						}
-					}
-					if (!exist) {
-						sections.add(sectionName);
-					}
-				}
 
-				List<CompanyBean> cbList = data.get(sectionName);
-				if (cbList == null) {
-					cbList = new ArrayList<CompanyBean>();
-					data.put(sectionName, cbList);
-				}
-				cbList.add(comp);
+			for (CompanySectionBean section : sections) {
+				tagSections.add(section.firstchar);
+				data.put(section.firstchar, section.company);
 			}
-
-			Collections.sort(sections);
 
 			notifyDataSetChanged();
 		}
@@ -213,8 +193,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		@Override
 		public int getCount() {
 			int count = 0;
-			for (String section : sections) {
-				count += (data.get(section).size() + 1);
+			for (String section : tagSections) {
+				count += (data.get(section).length + 1);
 			}
 			return count;
 		}
@@ -222,16 +202,16 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		@Override
 		public Object getItem(int position) {
 			int total = 0;
-			for (int i = 0; i < sections.size(); i++) {
-				String section = sections.get(i);
-				List<CompanyBean> cmps = data.get(section);
-				total += (cmps.size() + 1);
+			for (int i = 0; i < tagSections.size(); i++) {
+				String section = tagSections.get(i);
+				CompanyBean[] cmps = data.get(section);
+				total += (cmps.length + 1);
 				if (total > position) {
 					int pos = total - position;
-					if (pos > cmps.size()) {
+					if (pos > cmps.length) {
 						return section;
 					} else {
-						return cmps.get(cmps.size() - pos);
+						return cmps[cmps.length - pos];
 					}
 				}
 			}
@@ -279,7 +259,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		public void reset() {
 			data.clear();
-			sections.clear();
+			tagSections.clear();
 			notifyDataSetChanged();
 		}
 
@@ -287,8 +267,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		public int getPositionForSection(int section) {
 			int total = 0;
 			for (int i = 0; i < section; i++) {
-				String s = sections.get(i);
-				total += (data.get(s).size() + 1);
+				String s = tagSections.get(i);
+				total += (data.get(s).length + 1);
 			}
 			return total;
 		}
@@ -297,9 +277,9 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		public int getSectionForPosition(int position) {
 			int i;
 			int total = 0;
-			for (i = 0; i < sections.size(); i++) {
-				String section = sections.get(i);
-				total += (data.get(section).size() + 1);
+			for (i = 0; i < tagSections.size(); i++) {
+				String section = tagSections.get(i);
+				total += (data.get(section).length + 1);
 				if (total > position) {
 					break;
 				}
@@ -309,8 +289,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		@Override
 		public Object[] getSections() {
-			String[] sectionArray = new String[sections.size()];
-			sections.toArray(sectionArray);
+			String[] sectionArray = new String[tagSections.size()];
+			tagSections.toArray(sectionArray);
 			return sectionArray;
 		}
 

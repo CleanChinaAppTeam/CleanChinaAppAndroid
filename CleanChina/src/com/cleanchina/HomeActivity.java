@@ -51,6 +51,10 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 		if (v.getId() == R.id.home_meeting) {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://meeting")));
+		} else if (v.getId() == R.id.home_news) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("cleanchina://newslist")));
+
 		} else if (v.getId() == R.id.home_youku) {
 
 		} else if (v.getId() == R.id.home_ebook) {

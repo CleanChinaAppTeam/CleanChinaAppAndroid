@@ -131,8 +131,7 @@
         </activity>
         
         <activity
-            android:name="com.cleanchina.ebook.EbookActivity"
-            android:label="companydetail" >
+            android:name="com.cleanchina.ebook.EbookActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -146,8 +145,7 @@
         </activity>
         
         <activity
-            android:name="com.cleanchina.ebook.EbookListActivity"
-            android:label="companydetail" >
+            android:name="com.cleanchina.ebook.EbookListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -156,6 +154,34 @@
 
                 <data
                     android:host="ebooklist"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.cleanchina.news.NewsListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="newslist"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.cleanchina.news.NewsDetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="newsdetail"
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>

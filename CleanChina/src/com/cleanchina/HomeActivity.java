@@ -1,5 +1,7 @@
 package com.cleanchina;
 
+import java.net.URLEncoder;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,7 +57,14 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://newslist")));
 
-		} else if (v.getId() == R.id.home_youku) {
+		} else if (v.getId() == R.id.home_market) {
+			try {
+				startActivity(new Intent(Intent.ACTION_VIEW,
+						Uri.parse("cleanchina://web?url="
+								+ URLEncoder.encode("http://cn.clean-china.com/", "UTF-8"))));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		} else if (v.getId() == R.id.home_ebook) {
 			startActivity(new Intent(Intent.ACTION_VIEW,

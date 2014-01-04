@@ -61,22 +61,37 @@ public class CCActivity extends CLActivity {
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
+		if (titleBar == null) {
+			return;
+		}
 		titleBar.setTitle(title.toString());
 	}
 
 	public void setLeftButton(int resId, OnClickListener listener) {
+		if (titleBar == null) {
+			return;
+		}
 		titleBar.setLeftButton(resId, listener);
 	}
 
 	public void setRightButton(int resId, OnClickListener listener) {
+		if (titleBar == null) {
+			return;
+		}
 		titleBar.setRightButton(resId, listener);
 	}
 
 	public void setRight2Button(int resId, OnClickListener listener) {
+		if (titleBar == null) {
+			return;
+		}
 		titleBar.setRight2Button(resId, listener);
 	}
 
 	public void enableBackButton(boolean enable) {
+		if (titleBar == null) {
+			return;
+		}
 		titleBar.enableBackButton(enable);
 	}
 

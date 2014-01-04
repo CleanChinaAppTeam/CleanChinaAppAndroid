@@ -61,6 +61,9 @@ public class MeetingActivity extends CCActivity implements OnClickListener {
 		} else if (v == audienceView) {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://register")));
+		} else if (v == evenView) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("cleanchina://forumtab")));
 		} else {
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://meetingtab?tag=" + v.getTag())));

@@ -9,7 +9,7 @@ import com.cleanchina.meeting.fragment.AboutFragment;
 import com.cleanchina.meeting.fragment.RewardFragment;
 import com.cleanchina.meeting.fragment.CostFragment;
 import com.cleanchina.meeting.fragment.MapFragment;
-import com.cleanchina.meeting.fragment.SearchFragment;
+import com.cleanchina.meeting.fragment.CompanySearchFragment;
 
 public class MeetingTabActivity extends CCTabActivity {
 
@@ -20,7 +20,7 @@ public class MeetingTabActivity extends CCTabActivity {
 		addTab(setIndicator(tabHost.newTabSpec("about"),
 				R.drawable.ic_tab_about, "关于展会"), AboutFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("search"),
-				R.drawable.ic_tab_search, "展会查询"), SearchFragment.class);
+				R.drawable.ic_tab_search, "展会查询"), CompanySearchFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("map"), R.drawable.ic_tab_map,
 				"展会平面图"), MapFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("award"),

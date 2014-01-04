@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
+
     <!-- 使用网络功能所需权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,12 +16,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+        android:name="com.dennytech.common.app.CLApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:name="com.dennytech.common.app.CLApplication"
         android:label="@string/app_name"
         android:theme="@style/Theme.CC" >
-        
         <activity
             android:name="com.cleanchina.loading.LoadingActivity"
             android:label="@string/app_name" >
@@ -129,9 +128,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.ebook.EbookActivity">
+        <activity android:name="com.cleanchina.ebook.EbookActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -143,9 +140,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.ebook.EbookListActivity">
+        <activity android:name="com.cleanchina.ebook.EbookListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -157,9 +152,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.news.NewsListActivity">
+        <activity android:name="com.cleanchina.news.NewsListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -171,9 +164,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.news.NewsDetailActivity">
+        <activity android:name="com.cleanchina.news.NewsDetailActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -185,9 +176,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.weibo.WeiboListActivity">
+        <activity android:name="com.cleanchina.weibo.WeiboListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -199,9 +188,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.basic.WebActivity">
+        <activity android:name="com.cleanchina.basic.WebActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -213,9 +200,7 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name="com.cleanchina.reward.RewardCompanyListActivity">
+        <activity android:name="com.cleanchina.reward.RewardCompanyListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -224,6 +209,30 @@
 
                 <data
                     android:host="rewardcompanys"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.cleanchina.forum.ForumDetailActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="forumdetail"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.cleanchina.forum.ForumTabActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="forumtab"
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>

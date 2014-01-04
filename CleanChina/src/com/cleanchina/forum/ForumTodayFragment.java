@@ -1,4 +1,4 @@
-package com.cleanchina.reward;
+package com.cleanchina.forum;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,42 +9,49 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cleanchina.R;
-import com.cleanchina.app.CCActivity;
-import com.cleanchina.bean.RewardCompanyBean;
-import com.cleanchina.bean.RewardCompanyListBean;
+import com.cleanchina.app.CCFragment;
+import com.cleanchina.bean.ForumBean;
+import com.cleanchina.bean.ForumListBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
+import com.cleanchina.widget.sectionlist.SectionListItem;
 import com.dennytech.common.adapter.BasicAdapter;
+import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
 import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 
-public class RewardCompanyListActivity extends CCActivity implements
+public class ForumTodayFragment extends CCFragment implements
 		OnItemClickListener, MApiRequestHandler {
 
 	private MApiRequest request;
 	private Adapter adapter;
-	private String id;
-	private String title;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ListView list = new ListView(this);
-		setContentView(list);
+	}
 
-		id = getIntent().getData().getQueryParameter("id");
-		title = getIntent().getData().getQueryParameter("title");
-
-		setTitle(title);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		ListView list = new ListView(getActivity());
 		adapter = new Adapter();
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
+		return list;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		setTitle("论坛活动");
+		setRightButton(0, null);
+		setRight2Button(0, null);
 	}
 
 	@Override
@@ -59,10 +66,16 @@ public class RewardCompanyListActivity extends CCActivity implements
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		Object item = arg0.getItemAtPosition(position);
-		if (item instanceof RewardCompanyBean) {
-			RewardCompanyBean company = (RewardCompanyBean) item;
+		ForumBean forum = null;
+		if (item instanceof ForumBean) {
+			forum = (ForumBean) item;
+		} else if (item instanceof SectionListItem) {
+			forum = (ForumBean) ((SectionListItem) item).item;
+		}
+
+		if (forum != null) {
 			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse("cleanchina://detail?id=" + company.companyid)));
+					Uri.parse("cleanchina://forumdetail?id=" + forum.forum_id)));
 		}
 	}
 
@@ -71,18 +84,24 @@ public class RewardCompanyListActivity extends CCActivity implements
 			mapiService().abort(request, this, true);
 		}
 
-		request = APIRequest.mapiPost(Constant.DOMAIN + "reward",
-				RewardCompanyListBean.class, "rewardid", id);
+		request = APIRequest
+				.mapiGet(Constant.DOMAIN + "forum", CacheType.NORMAL,
+						ForumListBean.class, "onlygettodayforum", "1");
 		mapiService().exec(request, this);
 	}
 
 	class Adapter extends BasicAdapter {
 
-		RewardCompanyBean[] data;
+		ForumBean[] data;
 		boolean error = false;
 
-		public void setData(RewardCompanyBean[] data) {
+		public void setData(ForumBean[] data) {
 			this.data = data;
+			notifyDataSetChanged();
+		}
+
+		public void reset() {
+			data = null;
 			notifyDataSetChanged();
 		}
 
@@ -122,18 +141,19 @@ public class RewardCompanyListActivity extends CCActivity implements
 					}
 				}, parent, convertView);
 			} else {
-				RewardCompanyBean company = (RewardCompanyBean) item;
+				ForumBean forum = (ForumBean) getItem(position);
 				View view = convertView;
-				if (!(view instanceof LinearLayout)) {
-					view = LayoutInflater.from(RewardCompanyListActivity.this)
-							.inflate(R.layout.layout_list_item_text16, null);
+				if (view == null || !"company".equals(view.getTag())) {
+					view = LayoutInflater.from(parent.getContext()).inflate(
+							R.layout.layout_list_item_text14, parent, false);
 				}
-				TextView text = (TextView) view.findViewById(R.id.text);
-				text.setText(company.companyname);
+				TextView tv = (TextView) view.findViewById(R.id.text);
+				tv.setText(forum.forum_name);
+				tv.setTag(forum);
+				view.setTag("company");
 				return view;
 			}
 		}
-
 	}
 
 	@Override
@@ -146,8 +166,8 @@ public class RewardCompanyListActivity extends CCActivity implements
 
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
-		if (resp.result() instanceof RewardCompanyListBean) {
-			RewardCompanyListBean ml = (RewardCompanyListBean) resp.result();
+		if (resp.result() instanceof ForumListBean) {
+			ForumListBean ml = (ForumListBean) resp.result();
 			adapter.data = ml.data;
 			adapter.notifyDataSetChanged();
 		}

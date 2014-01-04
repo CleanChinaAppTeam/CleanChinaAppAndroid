@@ -70,7 +70,7 @@ public class WeiboListActivity extends CCActivity implements
 		}
 
 		request = APIRequest.mapiPost(Constant.DOMAIN + "weibo",
-				NewsListBean.class, "pagesize", "20", "submit_time", startTime);
+				WeiboListBean.class, "pagesize", "20", "submit_time", startTime);
 		mapiService().exec(request, this);
 	}
 
@@ -124,7 +124,7 @@ public class WeiboListActivity extends CCActivity implements
 				View view = convertView;
 				if (!(view instanceof LinearLayout)) {
 					view = LayoutInflater.from(WeiboListActivity.this).inflate(
-							R.layout.layout_list_item_news, null);
+							R.layout.layout_list_item_weibo, null);
 				}
 				TextView date = (TextView) view.findViewById(R.id.date);
 				date.setText(weibo.weibo_submittime);
@@ -154,7 +154,7 @@ public class WeiboListActivity extends CCActivity implements
 
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
-		if (resp.result() instanceof NewsListBean) {
+		if (resp.result() instanceof WeiboListBean) {
 			WeiboListBean ml = (WeiboListBean) resp.result();
 			adapter.appendData(ml.data);
 			if (ml.data.length == 0) {

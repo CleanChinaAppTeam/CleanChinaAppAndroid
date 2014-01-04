@@ -39,7 +39,7 @@ import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
 import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 
-public class SearchFragment extends CCFragment implements MApiRequestHandler,
+public class CompanySearchFragment extends CCFragment implements MApiRequestHandler,
 		OnItemClickListener, OnCheckedChangeListener, TextWatcher {
 
 	private EditText input;

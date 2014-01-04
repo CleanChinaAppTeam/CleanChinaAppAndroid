@@ -39,8 +39,9 @@ import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
 import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 
-public class CompanySearchFragment extends CCFragment implements MApiRequestHandler,
-		OnItemClickListener, OnCheckedChangeListener, TextWatcher {
+public class CompanySearchFragment extends CCFragment implements
+		MApiRequestHandler, OnItemClickListener, OnCheckedChangeListener,
+		TextWatcher {
 
 	private EditText input;
 	private RadioGroup group;
@@ -51,7 +52,6 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 	private ProgressBar loading;
 
 	private Adapter adapter;
-	private Adapter adapter2;
 
 	private int status;
 	private static final int STATUS_AZ = 0;
@@ -91,8 +91,8 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 		listView.setOnItemClickListener(this);
 		mIndexBar.setListView(listView);
 		listView.setAdapter(adapter);
+		mIndexBar.setSectionIndexter(adapter);
 
-		adapter2 = new Adapter();
 		changeStatus(STATUS_AZ);
 		requestData(null, 1);
 	}
@@ -149,17 +149,6 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 
 	private void changeStatus(int status) {
 		this.status = status;
-
-		if (status == STATUS_AZ) {
-			listView.setAdapter(adapter);
-			mIndexBar.setSectionIndexter(adapter);
-			adapter.notifyDataSetChanged();
-
-		} else if (status == STATUS_PRODUCT || status == STATUS_SEARCH) {
-			listView.setAdapter(adapter2);
-			mIndexBar.setSectionIndexter(adapter2);
-			adapter2.notifyDataSetChanged();
-		}
 	}
 
 	private void requestData(String key, int sort) {
@@ -296,52 +285,6 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 
 	}
 
-	class Adapter2 extends BasicAdapter {
-
-		CompanyBean[] data;
-
-		public void setData(CompanyBean[] data) {
-			this.data = data;
-			notifyDataSetChanged();
-		}
-
-		public void reset() {
-			data = null;
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public int getCount() {
-			return data == null ? 0 : data.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return data[position];
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			CompanyBean company = (CompanyBean) getItem(position);
-			View view = convertView;
-			if (view == null || !"company".equals(view.getTag())) {
-				view = LayoutInflater.from(parent.getContext()).inflate(
-						R.layout.layout_list_item_text14, parent, false);
-			}
-			TextView tv = (TextView) view.findViewById(R.id.text);
-			tv.setText(company.companyname);
-			tv.setTag(company);
-			view.setTag("company");
-			return view;
-		}
-
-	}
-
 	@Override
 	public void onRequestStart(MApiRequest req) {
 	}
@@ -353,11 +296,9 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
 		if (resp.result() instanceof CompanyListBean) {
-			if (status == STATUS_AZ) {
-				adapter.setData(((CompanyListBean) resp.result()).data);
-				mIndexBar.setSectionIndexter(adapter);
-			}
-			adapter2.setData(((CompanyListBean) resp.result()).data);
+			adapter.setData(((CompanyListBean) resp.result()).data);
+			mIndexBar.setSectionIndexter(adapter);
+			mIndexBar.notifyDataSetChanged();
 		}
 		loading.setVisibility(View.GONE);
 	}
@@ -380,7 +321,7 @@ public class CompanySearchFragment extends CCFragment implements MApiRequestHand
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter2.reset();
+		adapter.reset();
 		requestData(s.toString(), status == STATUS_AZ ? 1 : 2);
 	}
 

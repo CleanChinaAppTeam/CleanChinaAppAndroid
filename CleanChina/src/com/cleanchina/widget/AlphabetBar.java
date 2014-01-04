@@ -50,6 +50,11 @@ public class AlphabetBar extends View {
 		this.mSections = (String[]) sectionIndexter.getSections();
 		requestLayout();
 	}
+	
+	public void notifyDataSetChanged() {
+		this.mSections = (String[]) sectionIndexter.getSections();
+		requestLayout();
+	}
 
 	public int getCurIndex() {
 		return mCurIdx;

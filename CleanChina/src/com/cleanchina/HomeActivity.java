@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 
 import com.cleanchina.app.CCActivity;
+import com.cleanchina.loading.AdvertiseManager;
 
 public class HomeActivity extends CCActivity implements OnClickListener {
 
@@ -21,6 +22,8 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 	private View youkuBtn;
 	private View wechatBtn;
 	private View weiboBtn;
+
+	private AdvertiseManager manager;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -41,6 +44,15 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 		youkuBtn.setOnClickListener(this);
 		wechatBtn.setOnClickListener(this);
 		weiboBtn.setOnClickListener(this);
+
+		manager = new AdvertiseManager(this, mapiService(), imageService());
+		manager.start();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		manager.stop();
+		super.onDestroy();
 	}
 
 	@Override
@@ -61,7 +73,8 @@ public class HomeActivity extends CCActivity implements OnClickListener {
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW,
 						Uri.parse("cleanchina://web?url="
-								+ URLEncoder.encode("http://cn.clean-china.com/", "UTF-8"))));
+								+ URLEncoder.encode(
+										"http://cn.clean-china.com/", "UTF-8"))));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

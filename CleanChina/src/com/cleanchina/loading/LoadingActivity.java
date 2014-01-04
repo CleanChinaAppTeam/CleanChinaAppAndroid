@@ -19,8 +19,15 @@ public class LoadingActivity extends CCActivity implements LoadingHandler {
 
 	private Handler forwardHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse("cleanchina://home")));
+			AdvertiseManager manager = new AdvertiseManager(
+					LoadingActivity.this, mapiService(), imageService());
+			if (manager.existsAdvertise()) {
+				startActivity(new Intent(Intent.ACTION_VIEW,
+						Uri.parse("cleanchina://advertise")));
+			} else {
+				startActivity(new Intent(Intent.ACTION_VIEW,
+						Uri.parse("cleanchina://home")));
+			}
 			finish();
 		};
 	};

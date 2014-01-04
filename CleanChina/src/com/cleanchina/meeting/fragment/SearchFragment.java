@@ -94,7 +94,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		adapter2 = new Adapter();
 		changeStatus(STATUS_AZ);
-		requestData(null);
+		requestData(null, 1);
 	}
 
 	@Override
@@ -140,10 +140,10 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		if (checkedId == R.id.meeting_search_cb_az) {
 			changeStatus(STATUS_AZ);
-			requestData(null);
+			requestData(null, 1);
 		} else {
 			changeStatus(STATUS_PRODUCT);
-			requestData(null);
+			requestData(null, 2);
 		}
 	}
 
@@ -162,14 +162,14 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 		}
 	}
 
-	private void requestData(String key) {
+	private void requestData(String key, int sort) {
 		loading.setVisibility(View.VISIBLE);
 		if (request != null) {
 			mapiService().abort(request, this, true);
 		}
 		request = APIRequest.mapiGet(Constant.DOMAIN + "company",
 				CacheType.NORMAL, CompanyListBean.class, "querykey",
-				key == null ? "" : key);
+				key == null ? "" : key, "sortby", String.valueOf(sort));
 		mapiService().exec(request, this);
 	}
 
@@ -183,8 +183,8 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 			data.clear();
 
 			for (CompanySectionBean section : sections) {
-				tagSections.add(section.firstchar);
-				data.put(section.firstchar, section.company);
+				tagSections.add(section.sectionname);
+				data.put(section.sectionname, section.company);
 			}
 
 			notifyDataSetChanged();
@@ -381,7 +381,7 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		adapter2.reset();
-		requestData(s.toString());
+		requestData(s.toString(), status == STATUS_AZ ? 1 : 2);
 	}
 
 }

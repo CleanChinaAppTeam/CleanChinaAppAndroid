@@ -152,13 +152,13 @@ public class SearchFragment extends CCFragment implements MApiRequestHandler,
 
 		if (status == STATUS_AZ) {
 			listView.setAdapter(adapter);
+			mIndexBar.setSectionIndexter(adapter);
 			adapter.notifyDataSetChanged();
-			mIndexBar.setVisibility(View.VISIBLE);
 
 		} else if (status == STATUS_PRODUCT || status == STATUS_SEARCH) {
 			listView.setAdapter(adapter2);
+			mIndexBar.setSectionIndexter(adapter2);
 			adapter2.notifyDataSetChanged();
-			mIndexBar.setVisibility(View.INVISIBLE);
 		}
 	}
 

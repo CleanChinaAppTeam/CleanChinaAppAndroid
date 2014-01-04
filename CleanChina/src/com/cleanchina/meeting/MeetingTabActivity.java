@@ -6,7 +6,7 @@ import android.view.Window;
 import com.cleanchina.R;
 import com.cleanchina.app.CCTabActivity;
 import com.cleanchina.meeting.fragment.AboutFragment;
-import com.cleanchina.meeting.fragment.AwardFragment;
+import com.cleanchina.meeting.fragment.RewardFragment;
 import com.cleanchina.meeting.fragment.CostFragment;
 import com.cleanchina.meeting.fragment.MapFragment;
 import com.cleanchina.meeting.fragment.SearchFragment;
@@ -24,7 +24,7 @@ public class MeetingTabActivity extends CCTabActivity {
 		addTab(setIndicator(tabHost.newTabSpec("map"), R.drawable.ic_tab_map,
 				"展会平面图"), MapFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("award"),
-				R.drawable.ic_tab_award, "金钻奖"), AwardFragment.class);
+				R.drawable.ic_tab_award, "金钻奖"), RewardFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("cost"), R.drawable.ic_tab_cost,
 				"聚划算"), CostFragment.class);
 		

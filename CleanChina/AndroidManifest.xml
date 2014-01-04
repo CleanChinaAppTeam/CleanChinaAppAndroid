@@ -213,6 +213,20 @@
                     android:scheme="cleanchina" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.cleanchina.reward.RewardCompanyListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="rewardcompanys"
+                    android:scheme="cleanchina" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

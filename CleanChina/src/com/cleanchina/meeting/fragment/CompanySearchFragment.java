@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -56,7 +55,6 @@ public class CompanySearchFragment extends CCFragment implements
 	private int status;
 	private static final int STATUS_AZ = 0;
 	private static final int STATUS_PRODUCT = 1;
-	private static final int STATUS_SEARCH = 2;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,13 +67,6 @@ public class CompanySearchFragment extends CCFragment implements
 		View view = inflater.inflate(R.layout.fragment_meeting_search, null);
 		input = (EditText) view.findViewById(R.id.meeting_search_input);
 		input.addTextChangedListener(this);
-		input.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				changeStatus(STATUS_SEARCH);
-			}
-		});
 		group = (RadioGroup) view.findViewById(R.id.meeting_search_group);
 		group.setOnCheckedChangeListener(this);
 		listView = (ListView) view.findViewById(R.id.list);
@@ -104,11 +95,11 @@ public class CompanySearchFragment extends CCFragment implements
 		setRightButton(0, null);
 		setRight2Button(0, null);
 
-		if (status == STATUS_AZ) {
-			changeStatus(STATUS_AZ);
-		} else {
-			changeStatus(STATUS_PRODUCT);
-		}
+		// if (status == STATUS_AZ) {
+		// changeStatus(STATUS_AZ);
+		// } else {
+		// changeStatus(STATUS_PRODUCT);
+		// }
 	}
 
 	@Override
@@ -141,7 +132,7 @@ public class CompanySearchFragment extends CCFragment implements
 		if (checkedId == R.id.meeting_search_cb_az) {
 			changeStatus(STATUS_AZ);
 			requestData(null, 1);
-		} else {
+		} else if (checkedId == R.id.meeting_search_cb_product) {
 			changeStatus(STATUS_PRODUCT);
 			requestData(null, 2);
 		}
@@ -316,7 +307,6 @@ public class CompanySearchFragment extends CCFragment implements
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		changeStatus(STATUS_SEARCH);
 	}
 
 	@Override

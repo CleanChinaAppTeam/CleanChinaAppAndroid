@@ -7,7 +7,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,12 +42,10 @@ public class ForumSearchFragment extends CCFragment implements
 	private ProgressBar loading;
 
 	private Adapter adapter;
-	private Adapter adapter2;
 
 	private int status;
 	private static final int STATUS_DATE = 0;
 	private static final int STATUS_CLASS = 1;
-	private static final int STATUS_SEARCH = 2;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,13 +58,6 @@ public class ForumSearchFragment extends CCFragment implements
 		View view = inflater.inflate(R.layout.fragment_forum_search, null);
 		input = (EditText) view.findViewById(R.id.meeting_search_input);
 		input.addTextChangedListener(this);
-		input.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				changeStatus(STATUS_SEARCH);
-			}
-		});
 		group = (RadioGroup) view.findViewById(R.id.meeting_search_group);
 		group.setOnCheckedChangeListener(this);
 		listView = (ListView) view.findViewById(R.id.list);
@@ -82,7 +72,6 @@ public class ForumSearchFragment extends CCFragment implements
 		listView.setOnItemClickListener(this);
 		listView.setAdapter(adapter);
 
-		adapter2 = new Adapter();
 		changeStatus(STATUS_DATE);
 		requestData(null, 1);
 	}
@@ -138,15 +127,6 @@ public class ForumSearchFragment extends CCFragment implements
 
 	private void changeStatus(int status) {
 		this.status = status;
-
-		if (status == STATUS_DATE) {
-			listView.setAdapter(adapter);
-			adapter.notifyDataSetChanged();
-
-		} else if (status == STATUS_CLASS || status == STATUS_SEARCH) {
-			listView.setAdapter(adapter2);
-			adapter2.notifyDataSetChanged();
-		}
 	}
 
 	private void requestData(String key, int sort) {
@@ -227,10 +207,7 @@ public class ForumSearchFragment extends CCFragment implements
 	@Override
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
 		if (resp.result() instanceof ForumListBean) {
-			if (status == STATUS_DATE) {
-				adapter.setData(((ForumListBean) resp.result()).data);
-			}
-			adapter2.setData(((ForumListBean) resp.result()).data);
+			adapter.setData(((ForumListBean) resp.result()).data);
 		}
 		loading.setVisibility(View.GONE);
 	}
@@ -248,12 +225,10 @@ public class ForumSearchFragment extends CCFragment implements
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		changeStatus(STATUS_SEARCH);
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter2.reset();
 		requestData(s.toString(), status == STATUS_DATE ? 1 : 2);
 	}
 

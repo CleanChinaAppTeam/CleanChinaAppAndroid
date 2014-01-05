@@ -21,7 +21,8 @@ public class AboutFragment extends CCFragment implements OnItemClickListener {
 	private ListView listView;
 	private Adapter adapter;
 	private static final String[] menus = { "展会介绍", "如何参观", "酒店住宿", "免费班车",
-			"停车服务", "现场服务" };
+			"停车服务", "现场服务的餐饮", "现场服务的网络", "现场服务的洗手间", "现场服务的礼品", "现场服务的主办方办公室",
+			"现场服务的VIP休息区" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class AboutFragment extends CCFragment implements OnItemClickListener {
 		case 3:
 		case 4:
 		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
 			startActivity(new Intent(Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://imagedata?title=" + menus[position]
 							+ "&url=" + Constant.DOMAIN + "expo" + position)));

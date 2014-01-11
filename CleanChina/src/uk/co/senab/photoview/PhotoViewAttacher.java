@@ -351,6 +351,9 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 		ImageView imageView = getImageView();
 
 		if (null != imageView) {
+			if (null != mViewTapListener) {
+				mViewTapListener.onViewTap(imageView, e.getX(), e.getY());
+			}
 			if (null != mPhotoTapListener) {
 				final RectF displayRect = getDisplayRect();
 
@@ -367,9 +370,6 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 						return true;
 					}
 				}
-			}
-			if (null != mViewTapListener) {
-				mViewTapListener.onViewTap(imageView, e.getX(), e.getY());
 			}
 		}
 

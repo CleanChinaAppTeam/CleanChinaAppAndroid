@@ -20,10 +20,16 @@
     <style name="CustomWindowTitleBackground">
         <item name="android:background">@color/bg_blue</item>
     </style>
-    
+
     <style name="CustomListItem">
         <item name="android:listSelector">@drawable/list_item</item>
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="MapPopUpDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
     </style>
 
 </resources>

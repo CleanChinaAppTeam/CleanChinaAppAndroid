@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ import com.cleanchina.bean.NewsBean;
 import com.cleanchina.bean.NewsListBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
+import com.cleanchina.widget.NetworkImageView;
 import com.dennytech.common.adapter.BasicAdapter;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
@@ -127,6 +129,13 @@ public class NewsListActivity extends CCActivity implements
 				if (!(view instanceof LinearLayout)) {
 					view = LayoutInflater.from(NewsListActivity.this).inflate(
 							R.layout.layout_list_item_news, null);
+				}
+				NetworkImageView image = (NetworkImageView) view.findViewById(R.id.icon);
+				if (TextUtils.isEmpty(news.news_img)) {
+					image.setVisibility(View.GONE);
+				} else {
+					image.setVisibility(View.VISIBLE);
+					image.setImage(news.news_img);
 				}
 				TextView title = (TextView) view.findViewById(R.id.text);
 				title.setText(news.news_title);

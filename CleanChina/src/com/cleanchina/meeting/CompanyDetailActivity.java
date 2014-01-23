@@ -1,6 +1,10 @@
 package com.cleanchina.meeting;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.cleanchina.R;
@@ -38,6 +42,17 @@ public class CompanyDetailActivity extends CCActivity implements
 		compId = getIntent().getData().getQueryParameter("id");
 		iconView = (NetworkImageView) findViewById(R.id.detail_icon);
 		numView = (TextView) findViewById(R.id.detail_num);
+		numView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("cleanchina://meetingtab?tag=map&companyname="
+								+ detail.companyname));
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+			}
+		});
 		nameView = (TextView) findViewById(R.id.detail_name);
 		timeView = (TextView) findViewById(R.id.detail_time);
 		addressView = (TextView) findViewById(R.id.detail_adress);
@@ -46,7 +61,7 @@ public class CompanyDetailActivity extends CCActivity implements
 
 		requestData();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		if (request != null) {

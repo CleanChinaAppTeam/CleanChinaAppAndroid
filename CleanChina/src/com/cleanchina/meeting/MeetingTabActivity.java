@@ -1,5 +1,6 @@
 package com.cleanchina.meeting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -29,6 +30,11 @@ public class MeetingTabActivity extends CCTabActivity {
 				"聚划算"), CostFragment.class);
 		
 		setCurrentTab(getIntent().getData().getQueryParameter("tag"));
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		setCurrentTab(intent.getData().getQueryParameter("tag"));
 	}
 	
 	@Override

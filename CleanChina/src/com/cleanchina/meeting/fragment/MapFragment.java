@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 	private MapListBean maps;
 
 	private int curMap;
+	private String curCmp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,26 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		setTitle("展位平面图");
 		setRightButton(R.drawable.title_1, this);
 		setRight2Button(R.drawable.title_2, this);
+
+		curCmp = getActivity().getIntent().getData()
+				.getQueryParameter("companyname");
+		openCurCmp();
+	}
+	
+	private void openCurCmp() {
+		if (!TextUtils.isEmpty(curCmp) && maps != null) {
+			List<CompanyPosBean> cpList = cMap.get(maps.data[curMap].zhanweiimg_id);
+			if (cpList == null) {
+				return;
+			}
+			
+			for (CompanyPosBean companyPosBean : cpList) {
+				if (companyPosBean.companyname.equals(curCmp)) {
+					showPopupDialog(companyPosBean);
+					return;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -228,6 +250,8 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 				}
 				cMap.put(id1, cpList1);
 				cMap.put(id2, cpList2);
+				
+				openCurCmp();
 			}
 		}
 

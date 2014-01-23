@@ -13,14 +13,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.cleanchina.R;
@@ -30,24 +29,20 @@ import com.cleanchina.bean.CompanyListBean;
 import com.cleanchina.bean.CompanySectionBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
-import com.cleanchina.widget.AlphabetBar;
-import com.cleanchina.widget.sectionlist.SectionListItem;
-import com.dennytech.common.adapter.BasicAdapter;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
 import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 
 public class CompanySearchFragment extends CCFragment implements
-		MApiRequestHandler, OnItemClickListener, OnCheckedChangeListener,
+		MApiRequestHandler, OnChildClickListener, OnCheckedChangeListener,
 		TextWatcher {
 
 	private EditText input;
 	private RadioGroup group;
 	private MApiRequest request;
 
-	private AlphabetBar mIndexBar;
-	private ListView listView;
+	private ExpandableListView listView;
 	private ProgressBar loading;
 
 	private Adapter adapter;
@@ -69,8 +64,7 @@ public class CompanySearchFragment extends CCFragment implements
 		input.addTextChangedListener(this);
 		group = (RadioGroup) view.findViewById(R.id.meeting_search_group);
 		group.setOnCheckedChangeListener(this);
-		listView = (ListView) view.findViewById(R.id.list);
-		mIndexBar = (AlphabetBar) view.findViewById(R.id.sidebar);
+		listView = (ExpandableListView) view.findViewById(R.id.list);
 		loading = (ProgressBar) view.findViewById(R.id.loading);
 		return view;
 	}
@@ -79,10 +73,8 @@ public class CompanySearchFragment extends CCFragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		adapter = new Adapter();
-		listView.setOnItemClickListener(this);
-		mIndexBar.setListView(listView);
+		listView.setOnChildClickListener(this);
 		listView.setAdapter(adapter);
-		mIndexBar.setSectionIndexter(adapter);
 
 		changeStatus(STATUS_AZ);
 		requestData(null, 1);
@@ -111,20 +103,16 @@ public class CompanySearchFragment extends CCFragment implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
-		Object item = av.getItemAtPosition(position);
-		CompanyBean comp = null;
-		if (item instanceof CompanyBean) {
-			comp = (CompanyBean) item;
-		} else if (item instanceof SectionListItem) {
-			comp = (CompanyBean) ((SectionListItem) item).item;
-		}
-
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		CompanyBean comp = (CompanyBean) parent.getExpandableListAdapter()
+				.getChild(groupPosition, childPosition);
 		if (comp != null) {
 			startActivity(new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse("cleanchina://companydetail?id=" + comp.companyid)));
 		}
+		return true;
 	}
 
 	@Override
@@ -153,7 +141,7 @@ public class CompanySearchFragment extends CCFragment implements
 		mapiService().exec(request, this);
 	}
 
-	class Adapter extends BasicAdapter implements SectionIndexer {
+	class Adapter extends BaseExpandableListAdapter {
 
 		private List<String> tagSections = new ArrayList<String>();
 		private Map<String, CompanyBean[]> data = new HashMap<String, CompanyBean[]>();
@@ -170,73 +158,6 @@ public class CompanySearchFragment extends CCFragment implements
 			notifyDataSetChanged();
 		}
 
-		@Override
-		public int getCount() {
-			int count = 0;
-			for (String section : tagSections) {
-				count += (data.get(section).length + 1);
-			}
-			return count;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			int total = 0;
-			for (int i = 0; i < tagSections.size(); i++) {
-				String section = tagSections.get(i);
-				CompanyBean[] cmps = data.get(section);
-				total += (cmps.length + 1);
-				if (total > position) {
-					int pos = total - position;
-					if (pos > cmps.length) {
-						return section;
-					} else {
-						return cmps[cmps.length - pos];
-					}
-				}
-			}
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public int getViewTypeCount() {
-			return 2;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			Object item = getItem(position);
-			if (item instanceof String) {
-				View view = convertView;
-				if (view == null || !"section".equals(view.getTag())) {
-					view = LayoutInflater.from(parent.getContext()).inflate(
-							R.layout.section_view, parent, false);
-				}
-				TextView tv = (TextView) view.findViewById(R.id.listTextView);
-				tv.setText((String) item);
-				view.setTag("section");
-				return view;
-
-			} else {
-				CompanyBean company = (CompanyBean) item;
-				View view = convertView;
-				if (view == null || !"company".equals(view.getTag())) {
-					view = LayoutInflater.from(parent.getContext()).inflate(
-							R.layout.layout_list_item_text14, parent, false);
-				}
-				TextView tv = (TextView) view.findViewById(R.id.text);
-				tv.setText(company.companyname);
-				tv.setTag(company);
-				view.setTag("company");
-				return view;
-			}
-		}
-
 		public void reset() {
 			data.clear();
 			tagSections.clear();
@@ -244,34 +165,77 @@ public class CompanySearchFragment extends CCFragment implements
 		}
 
 		@Override
-		public int getPositionForSection(int section) {
-			int total = 0;
-			for (int i = 0; i < section; i++) {
-				String s = tagSections.get(i);
-				total += (data.get(s).length + 1);
-			}
-			return total;
+		public Object getChild(int groupPosition, int childPosition) {
+			String section = tagSections.get(groupPosition);
+			CompanyBean[] childs = data.get(section);
+			return childs[childPosition];
 		}
 
 		@Override
-		public int getSectionForPosition(int position) {
-			int i;
-			int total = 0;
-			for (i = 0; i < tagSections.size(); i++) {
-				String section = tagSections.get(i);
-				total += (data.get(section).length + 1);
-				if (total > position) {
-					break;
-				}
-			}
-			return i;
+		public long getChildId(int groupPosition, int childPosition) {
+			return childPosition;
 		}
 
 		@Override
-		public Object[] getSections() {
-			String[] sectionArray = new String[tagSections.size()];
-			tagSections.toArray(sectionArray);
-			return sectionArray;
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent) {
+			CompanyBean company = (CompanyBean) getChild(groupPosition,
+					childPosition);
+			View view = convertView;
+			if (view == null || !"company".equals(view.getTag())) {
+				view = LayoutInflater.from(parent.getContext()).inflate(
+						R.layout.layout_list_item_text14, parent, false);
+			}
+			TextView tv = (TextView) view.findViewById(R.id.text);
+			tv.setText(company.companyname);
+			tv.setTag(company);
+			view.setTag("company");
+			return view;
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			String section = tagSections.get(groupPosition);
+			return data.get(section).length;
+		}
+
+		@Override
+		public Object getGroup(int groupPosition) {
+			return tagSections.get(groupPosition);
+		}
+
+		@Override
+		public int getGroupCount() {
+			return tagSections.size();
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			return groupPosition;
+		}
+
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded,
+				View convertView, ViewGroup parent) {
+			View view = convertView;
+			if (view == null || !"section".equals(view.getTag())) {
+				view = LayoutInflater.from(parent.getContext()).inflate(
+						R.layout.section_view, parent, false);
+			}
+			TextView tv = (TextView) view.findViewById(R.id.listTextView);
+			tv.setText((String) getGroup(groupPosition));
+			view.setTag("section");
+			return view;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			return true;
 		}
 
 	}
@@ -288,8 +252,13 @@ public class CompanySearchFragment extends CCFragment implements
 	public void onRequestFinish(MApiRequest req, MApiResponse resp) {
 		if (resp.result() instanceof CompanyListBean) {
 			adapter.setData(((CompanyListBean) resp.result()).data);
-			mIndexBar.setSectionIndexter(adapter);
-			mIndexBar.notifyDataSetChanged();
+			for (int i = 0; i < adapter.getGroupCount(); i++) {
+				if (listView.isGroupExpanded(i)) {
+					listView.collapseGroup(i);
+				}
+			}
+			listView.expandGroup(0);
+			listView.setSelection(0);
 		}
 		loading.setVisibility(View.GONE);
 	}

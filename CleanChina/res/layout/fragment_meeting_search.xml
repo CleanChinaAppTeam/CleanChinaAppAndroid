@@ -61,18 +61,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <ListView
+        <ExpandableListView
             android:id="@+id/list"
             style="@style/CustomListItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <com.cleanchina.widget.AlphabetBar
-            android:id="@+id/sidebar"
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:paddingRight="10dp" />
 
         <ProgressBar
             android:id="@+id/loading"

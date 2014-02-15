@@ -30,13 +30,14 @@ import com.cleanchina.bean.MapListBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
 import com.cleanchina.meeting.view.CompanyMapView;
+import com.cleanchina.meeting.view.CompanyMapView.MapLoadListener;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
 import com.dennytech.common.service.dataservice.mapi.MApiResponse;
 
 public class MapFragment extends CCFragment implements OnPhotoTapListener,
-		MApiRequestHandler, OnClickListener {
+		MApiRequestHandler, OnClickListener, MapLoadListener {
 
 	private CompanyMapView map;
 	private ProgressBar progress;
@@ -69,6 +70,7 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		super.onViewCreated(view, savedInstanceState);
 
 		map.setOnPhotoTapListener(this);
+		map.setMapLoadListener(this);
 
 		requestMap();
 	}
@@ -79,10 +81,6 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		setTitle("展位平面图");
 		setRightButton(R.drawable.title_1, this);
 		setRight2Button(R.drawable.title_2, this);
-
-		curCmp = getActivity().getIntent().getData()
-				.getQueryParameter("companyname");
-		openCurCmp();
 	}
 	
 	private void openCurCmp() {
@@ -99,6 +97,13 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void onMapLoaded() {
+		curCmp = getActivity().getIntent().getData()
+				.getQueryParameter("companyname");
+		openCurCmp();
 	}
 
 	@Override

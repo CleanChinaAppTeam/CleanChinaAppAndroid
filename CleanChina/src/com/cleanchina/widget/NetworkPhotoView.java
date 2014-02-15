@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import com.cleanchina.R;
 import com.dennytech.common.service.dataservice.Request;
 
 public class NetworkPhotoView extends NetworkImageView {
@@ -23,7 +24,7 @@ public class NetworkPhotoView extends NetworkImageView {
 	public NetworkPhotoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		isPhoto = true;
-		progressTextColor = context.getResources().getColor(android.R.color.black);
+		progressTextColor = context.getResources().getColor(R.color.text_gray);
 	}
 
 	protected Bitmap bitmap;

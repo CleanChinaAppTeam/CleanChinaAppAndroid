@@ -150,7 +150,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="优酷"
+            android:text="微博"
             android:textColor="@color/text_gray"
             android:textSize="13sp" />
     </LinearLayout>
@@ -159,6 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"
         android:paddingBottom="5dp" >
 
         <TextView

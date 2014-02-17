@@ -159,8 +159,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:visibility="gone"
-        android:paddingBottom="5dp" >
+        android:paddingBottom="5dp"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/home_wechat"
@@ -186,5 +186,35 @@
             android:textColor="@color/text_gray"
             android:textSize="11sp" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" >
+
+        <TextView
+            android:id="@+id/message_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/icon_popup"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="我就实施啊dk萨jdk萨lj大啊sd萨达姆萨d萨dsadsalsll零零落落llllsa啊sd萨d萨啊sd萨达姆"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/message_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="2dp"
+            android:paddingTop="2dp"
+            android:src="@drawable/ic_close" />
+    </FrameLayout>
 
 </FrameLayout>

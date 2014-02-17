@@ -97,10 +97,10 @@ public class CompanyDetailActivity extends CCActivity implements
 			iconView.setImage(result.logo);
 			numView.setText(result.zhanweihao);
 			nameView.setText(result.companyname);
-			timeView.setText(result.tele);
-			addressView.setText(result.address);
-			siteView.setText(result.location);
-			summaryView.setText(result.summary);
+			timeView.setText("电话：" + result.tele);
+//			addressView.setText("地址：" + result.address);
+			siteView.setText("位置：" + result.location);
+			summaryView.setText("简介：" + result.summary);
 		}
 	}
 

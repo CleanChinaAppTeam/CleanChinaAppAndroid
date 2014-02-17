@@ -79,10 +79,10 @@ public class MeetingDetailActivity extends CCActivity implements
 			DtailBean result = ((DetailResultBean) resp.result()).data;
 			iconView.setImage(result.logo);
 			nameView.setText(result.name);
-			timeView.setText(result.date);
-			addressView.setText(result.address);
-			siteView.setText(result.website);
-			summaryView.setText(result.summary);
+			timeView.setText("日期：" + result.date);
+			addressView.setText("地址：" + result.address);
+			siteView.setText("网址：" + result.website);
+			summaryView.setText("简介：" + result.summary);
 		}
 	}
 

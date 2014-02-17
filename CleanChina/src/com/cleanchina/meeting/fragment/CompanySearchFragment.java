@@ -195,6 +195,9 @@ public class CompanySearchFragment extends CCFragment implements
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
+			if (tagSections.size() == 0) {
+				return 0;
+			}
 			String section = tagSections.get(groupPosition);
 			return data.get(section).length;
 		}

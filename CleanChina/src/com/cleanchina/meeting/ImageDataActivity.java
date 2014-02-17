@@ -3,6 +3,7 @@ package com.cleanchina.meeting;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cleanchina.R;
@@ -10,7 +11,6 @@ import com.cleanchina.app.CCActivity;
 import com.cleanchina.bean.ImageDataBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
-import com.cleanchina.widget.NetworkPhotoView;
 import com.dennytech.common.service.dataservice.mapi.CacheType;
 import com.dennytech.common.service.dataservice.mapi.MApiRequest;
 import com.dennytech.common.service.dataservice.mapi.MApiRequestHandler;
@@ -24,7 +24,7 @@ import com.dennytech.common.service.dataservice.mapi.MApiResponse;
  */
 public class ImageDataActivity extends CCActivity implements MApiRequestHandler {
 
-	private NetworkPhotoView image;
+	private TextView text;
 	private ProgressBar progress;
 
 	private MApiRequest request;
@@ -38,7 +38,7 @@ public class ImageDataActivity extends CCActivity implements MApiRequestHandler 
 			return;
 		}
 		setTitle(uri.getQueryParameter("title"));
-		image = (NetworkPhotoView) findViewById(R.id.image);
+		text = (TextView) findViewById(R.id.text);
 		progress = (ProgressBar) findViewById(R.id.progress);
 
 		if (request != null) {
@@ -71,7 +71,7 @@ public class ImageDataActivity extends CCActivity implements MApiRequestHandler 
 		progress.setVisibility(View.GONE);
 		if (resp.result() instanceof ImageDataBean) {
 			ImageDataBean result = (ImageDataBean) resp.result();
-			image.setImage(result.data.img);
+			text.setText(result.data.img);
 		}
 	}
 

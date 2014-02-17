@@ -62,7 +62,7 @@ public class RewardCompanyListActivity extends CCActivity implements
 		if (item instanceof RewardCompanyBean) {
 			RewardCompanyBean company = (RewardCompanyBean) item;
 			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse("cleanchina://detail?id=" + company.companyid)));
+					Uri.parse("cleanchina://companydetail?id=" + company.companyid)));
 		}
 	}
 

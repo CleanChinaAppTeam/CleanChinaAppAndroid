@@ -34,7 +34,7 @@ public class AdvertiseActivity extends CCActivity {
 		}
 		
 		ImageView iv = new ImageView(this);
-		iv.setScaleType(ScaleType.CENTER_CROP);
+		iv.setScaleType(ScaleType.CENTER_INSIDE);
 		iv.setImageBitmap(adv);
 		setContentView(iv);
 		

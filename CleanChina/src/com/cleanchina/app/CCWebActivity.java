@@ -70,12 +70,13 @@ public class CCWebActivity extends CCActivity {
 	}
 
 	protected void setupWebSettings(WebSettings settings) {
-		settings.setBuiltInZoomControls(false);
+		settings.setBuiltInZoomControls(true);
 		settings.setSaveFormData(false);
 		settings.setSavePassword(false);
 		settings.setJavaScriptEnabled(true);
-		settings.setSupportZoom(false);
+		settings.setSupportZoom(true);
 		settings.setUseWideViewPort(true);
+		settings.setLoadWithOverviewMode(true); 
 	}
 
 	protected WebChromeClient createWebChromeClient() {

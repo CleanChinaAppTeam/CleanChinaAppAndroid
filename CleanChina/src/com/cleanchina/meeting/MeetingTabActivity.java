@@ -2,15 +2,17 @@ package com.cleanchina.meeting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 
 import com.cleanchina.R;
 import com.cleanchina.app.CCTabActivity;
 import com.cleanchina.meeting.fragment.AboutFragment;
-import com.cleanchina.meeting.fragment.RewardFragment;
+import com.cleanchina.meeting.fragment.CompanySearchFragment;
 import com.cleanchina.meeting.fragment.CostFragment;
 import com.cleanchina.meeting.fragment.MapFragment;
-import com.cleanchina.meeting.fragment.CompanySearchFragment;
+import com.cleanchina.meeting.fragment.RewardFragment;
 
 public class MeetingTabActivity extends CCTabActivity {
 
@@ -40,8 +42,20 @@ public class MeetingTabActivity extends CCTabActivity {
 	@Override
 	public void onTabChanged(String tabId) {
 		if (tabId.equals("cost")) {
-			setRightButton(R.drawable.title_how_buy, null);
-			setRight2Button(R.drawable.title_where_buy, null);
+			setRightButton(R.drawable.title_how_buy, new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					setCurrentTab("map");
+				}
+			});
+			setRight2Button(R.drawable.title_where_buy, new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					setCurrentTab("map");
+				}
+			});
 		} else {
 			setRightButton(0, null);
 			setRight2Button(0, null);

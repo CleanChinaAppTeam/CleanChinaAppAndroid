@@ -3,6 +3,7 @@ package com.cleanchina.meeting;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -25,9 +26,7 @@ public class CompanyDetailActivity extends CCActivity implements
 	private NetworkImageView iconView;
 	private TextView numView;
 	private TextView nameView;
-	private TextView timeView;
-	private TextView addressView;
-	private TextView siteView;
+	private TextView infoView;
 	private TextView summaryView;
 
 	private MApiRequest request;
@@ -54,9 +53,7 @@ public class CompanyDetailActivity extends CCActivity implements
 			}
 		});
 		nameView = (TextView) findViewById(R.id.detail_name);
-		timeView = (TextView) findViewById(R.id.detail_time);
-		addressView = (TextView) findViewById(R.id.detail_adress);
-		siteView = (TextView) findViewById(R.id.detail_site);
+		infoView = (TextView) findViewById(R.id.detail_info);
 		summaryView = (TextView) findViewById(R.id.detail_summary);
 
 		requestData();
@@ -97,10 +94,23 @@ public class CompanyDetailActivity extends CCActivity implements
 			iconView.setImage(result.logo);
 			numView.setText(result.zhanweihao);
 			nameView.setText(result.companyname);
-			timeView.setText("电话：" + result.tele);
-//			addressView.setText("地址：" + result.address);
-			siteView.setText("位置：" + result.location);
-			summaryView.setText("简介：" + result.summary);
+			StringBuilder sb = new StringBuilder();
+			if (!TextUtils.isEmpty(result.ename)) {
+				sb.append(result.ename + "\n\n");
+			}
+			if (!TextUtils.isEmpty(result.tele)) {
+				sb.append("电话：" + result.tele + "\n");
+			}
+			if (!TextUtils.isEmpty(result.address)) {
+				sb.append("地址：" + result.tele + "\n");
+			}
+			if (!TextUtils.isEmpty(result.location)) {
+				sb.append("位置：" + result.tele + "\n");
+			}
+			infoView.setText(sb.toString());
+			if (!TextUtils.isEmpty(result.summary)) {
+				summaryView.setText("简介：" + result.summary);
+			}
 		}
 	}
 

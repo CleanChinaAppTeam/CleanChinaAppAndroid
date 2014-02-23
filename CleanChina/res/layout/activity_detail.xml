@@ -47,27 +47,7 @@
             android:textSize="24dp" />
 
         <TextView
-            android:id="@+id/detail_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="21dp"
-            android:layout_marginRight="21dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/text_yellow"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/detail_adress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="21dp"
-            android:layout_marginRight="21dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_yellow"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/detail_site"
+            android:id="@+id/detail_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="21dp"

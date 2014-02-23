@@ -13,4 +13,6 @@ public class DtailBean {
 	public String tele;
 	public String location;
 	public String firstchar;
+	public String ename;
+	public String fax;
 }

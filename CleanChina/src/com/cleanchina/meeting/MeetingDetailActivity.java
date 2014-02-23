@@ -1,13 +1,14 @@
 package com.cleanchina.meeting;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cleanchina.R;
 import com.cleanchina.app.CCActivity;
-import com.cleanchina.bean.DtailBean;
 import com.cleanchina.bean.DetailResultBean;
+import com.cleanchina.bean.DtailBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
 import com.cleanchina.widget.NetworkImageView;
@@ -22,9 +23,7 @@ public class MeetingDetailActivity extends CCActivity implements
 	private NetworkImageView iconView;
 	private TextView numView;
 	private TextView nameView;
-	private TextView timeView;
-	private TextView addressView;
-	private TextView siteView;
+	private TextView infoView;
 	private TextView summaryView;
 
 	private MApiRequest request;
@@ -38,9 +37,7 @@ public class MeetingDetailActivity extends CCActivity implements
 		numView = (TextView) findViewById(R.id.detail_num);
 		numView.setVisibility(View.INVISIBLE);
 		nameView = (TextView) findViewById(R.id.detail_name);
-		timeView = (TextView) findViewById(R.id.detail_time);
-		addressView = (TextView) findViewById(R.id.detail_adress);
-		siteView = (TextView) findViewById(R.id.detail_site);
+		infoView = (TextView) findViewById(R.id.detail_info);
 		summaryView = (TextView) findViewById(R.id.detail_summary);
 
 		requestData();
@@ -79,9 +76,17 @@ public class MeetingDetailActivity extends CCActivity implements
 			DtailBean result = ((DetailResultBean) resp.result()).data;
 			iconView.setImage(result.logo);
 			nameView.setText(result.name);
-			timeView.setText("日期：" + result.date);
-			addressView.setText("地址：" + result.address);
-			siteView.setText("网址：" + result.website);
+			StringBuilder sb = new StringBuilder();
+			if (!TextUtils.isEmpty(result.date)) {
+				sb.append("日期：" + result.date + "\n");
+			}
+			if (!TextUtils.isEmpty(result.address)) {
+				sb.append("地址：" + result.address + "\n");
+			}
+			if (!TextUtils.isEmpty(result.website)) {
+				sb.append("网址：" + result.website + "\n");
+			}
+			infoView.setText(sb.toString());
 			summaryView.setText("简介：" + result.summary);
 		}
 	}

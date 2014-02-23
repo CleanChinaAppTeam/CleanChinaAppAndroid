@@ -21,7 +21,7 @@ public class MeetingTabActivity extends CCTabActivity {
 		addTab(setIndicator(tabHost.newTabSpec("about"),
 				R.drawable.ic_tab_about, "关于展会"), AboutFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("search"),
-				R.drawable.ic_tab_search, "展会查询"), CompanySearchFragment.class);
+				R.drawable.ic_tab_search, "展商查询"), CompanySearchFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("map"), R.drawable.ic_tab_map,
 				"展会平面图"), MapFragment.class);
 		addTab(setIndicator(tabHost.newTabSpec("award"),

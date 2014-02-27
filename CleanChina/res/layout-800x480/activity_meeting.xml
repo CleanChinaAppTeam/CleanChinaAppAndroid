@@ -115,7 +115,7 @@
                     android:layout_marginTop="210dp"
                     android:drawableTop="@drawable/ic_meeting_search"
                     android:gravity="center_horizontal"
-                    android:text="展会查询"
+                    android:text="展商查询"
                     android:textColor="@color/text_gray"
                     android:textSize="14dp" />
 

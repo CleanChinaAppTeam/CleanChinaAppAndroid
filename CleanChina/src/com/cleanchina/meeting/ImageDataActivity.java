@@ -46,7 +46,7 @@ public class ImageDataActivity extends CCActivity implements MApiRequestHandler 
 		}
 
 		request = APIRequest.mapiGet(uri.getQueryParameter("url"),
-				CacheType.NORMAL, ImageDataBean.class);
+				CacheType.DISABLED, ImageDataBean.class);
 		mapiService().exec(request, this);
 	}
 

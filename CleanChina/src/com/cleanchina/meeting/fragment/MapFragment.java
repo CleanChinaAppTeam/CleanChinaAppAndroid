@@ -82,8 +82,8 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 	public void onResume() {
 		super.onResume();
 		setTitle("展位平面图");
-		setRightButton(R.drawable.title_2, this);
-		setRight2Button(R.drawable.title_1, this);
+		setRightButton(R.drawable.title_1, this);
+		setRight2Button(R.drawable.title_2, this);
 	}
 
 	private void openCurCmpByName(String cmpName) {
@@ -136,11 +136,11 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.title_right_btn) {
-			curMap = 1;
+			curMap = 0;
 			updateMap();
 
 		} else if (v.getId() == R.id.title_right_btn2) {
-			curMap = 0;
+			curMap = 1;
 			updateMap();
 
 		}
@@ -192,11 +192,11 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		checkPosition((int) (x * map.getMapWidth()),
 				(int) (y * map.getMapHeight()));
 
-		Toast.makeText(
-				getActivity(),
-				"x:" + (int) (x * map.getMapWidth()) + " ,y:"
-						+ (int) (y * map.getMapHeight()), Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(
+//				getActivity(),
+//				"x:" + (int) (x * map.getMapWidth()) + " ,y:"
+//						+ (int) (y * map.getMapHeight()), Toast.LENGTH_SHORT)
+//				.show();
 	}
 
 	private boolean checkPosition(int x, int y) {

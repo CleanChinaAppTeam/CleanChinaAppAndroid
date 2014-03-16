@@ -26,7 +26,6 @@ import com.cleanchina.app.CCFragment;
 import com.cleanchina.bean.CompanyMapListBean;
 import com.cleanchina.bean.CompanyPosBean;
 import com.cleanchina.bean.CoordinateBean;
-import com.cleanchina.bean.CostInfoBean;
 import com.cleanchina.bean.MapListBean;
 import com.cleanchina.lib.APIRequest;
 import com.cleanchina.lib.Constant;
@@ -50,13 +49,11 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 	private MapListBean maps;
 
 	private int curMap;
-	private CostInfoBean costInfo;
+	private String curCmp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		costInfo = getActivity().getIntent().getParcelableExtra("costinfo");
 	}
 
 	@Override
@@ -85,52 +82,28 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		setRightButton(R.drawable.title_1, this);
 		setRight2Button(R.drawable.title_2, this);
 	}
-
-	private void openCurCmpByName(String cmpName) {
-		if (!TextUtils.isEmpty(cmpName) && maps != null) {
-			List<CompanyPosBean> cpList = cMap
-					.get(maps.data[curMap].zhanweiimg_id);
+	
+	private void openCurCmp() {
+		if (!TextUtils.isEmpty(curCmp) && maps != null) {
+			List<CompanyPosBean> cpList = cMap.get(maps.data[curMap].zhanweiimg_id);
 			if (cpList == null) {
 				return;
 			}
-
+			
 			for (CompanyPosBean companyPosBean : cpList) {
-				if (companyPosBean.companyname.equals(cmpName)) {
+				if (companyPosBean.companyname.equals(curCmp)) {
 					showPopupDialog(companyPosBean);
 					return;
 				}
 			}
 		}
 	}
-
-	private void openCurCmp(CostInfoBean costInfo) {
-		if (costInfo != null && maps != null) {
-			List<CompanyPosBean> cpList = cMap.get(costInfo.zhanweiimg_id);
-			if (cpList == null) {
-				return;
-			}
-
-			for (CompanyPosBean companyPosBean : cpList) {
-				if (companyPosBean.coordinate.equals(costInfo.coordinate)) {
-					showPopupDialog(companyPosBean);
-					return;
-				}
-			}
-
-			CompanyPosBean cmp = new CompanyPosBean();
-			cmp.companyid = -1;
-			cmp.companyname = "聚划算购买点";
-			cmp.zhanweiimg_id = costInfo.zhanweiimg_id;
-			cmp.coordinate = costInfo.coordinate;
-			showPopupDialog(cmp);
-		}
-	}
-
+	
 	@Override
 	public void onMapLoaded() {
-		String cmpName = getActivity().getIntent().getData()
+		curCmp = getActivity().getIntent().getData()
 				.getQueryParameter("companyname");
-		openCurCmpByName(cmpName);
+		openCurCmp();
 	}
 
 	@Override
@@ -220,20 +193,15 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		dialog.setContentView(R.layout.dialog_map_popup);
 		((TextView) dialog.findViewById(R.id.title)).setText(cp.companyname);
 		View view = dialog.findViewById(R.id.dialog);
-		if (cp.companyid == -1) {
-			dialog.findViewById(R.id.subtitle).setVisibility(View.GONE);
-		} else {
-			view.setOnClickListener(new OnClickListener() {
+		view.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri
-							.parse("cleanchina://companydetail?id="
-									+ cp.companyid)));
-					dialog.dismiss();
-				}
-			});
-		}
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri
+						.parse("cleanchina://companydetail?id=" + cp.companyid)));
+				dialog.dismiss();
+			}
+		});
 		dialog.show();
 
 		CoordinateBean c = cp.coordinate;
@@ -257,15 +225,6 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		if (req == mapReq) {
 			if (resp.result() instanceof MapListBean) {
 				maps = (MapListBean) resp.result();
-				if (costInfo != null) {
-					String id1 = maps.data[0].zhanweiimg_id;
-					if (id1.equals(costInfo.zhanweiimg_id)) {
-						curMap = 0;
-					} else {
-						curMap = 1;
-					}
-					updateMap();
-				}
 				updateMap();
 				requestPos();
 			}
@@ -296,10 +255,8 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 				}
 				cMap.put(id1, cpList1);
 				cMap.put(id2, cpList2);
-
-				if (costInfo != null) {
-					openCurCmp(costInfo);
-				}
+				
+				openCurCmp();
 			}
 		}
 

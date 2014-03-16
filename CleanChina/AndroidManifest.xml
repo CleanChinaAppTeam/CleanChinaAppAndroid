@@ -122,36 +122,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cleanchina.meeting.TextInfoActivity"
-            android:label="textinfo"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="textinfo"
-                    android:scheme="cleanchina" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.cleanchina.meeting.MapActivity"
-            android:label="map"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="map"
-                    android:scheme="cleanchina" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.cleanchina.meeting.CompanyDetailActivity"
             android:label="companydetail"
             android:screenOrientation="portrait" >

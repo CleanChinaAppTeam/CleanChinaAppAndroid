@@ -38,7 +38,7 @@ public class CCTabActivity extends CCActivity implements OnTabChangeListener {
 	public void setCurrentTab(String tag) {
 		tabHost.setCurrentTabByTag(tag);
 	}
-
+	
 	public TabSpec setIndicatorImage(TabSpec spec, int resid) {
 		ImageView v = new ImageView(this);
 		v.setImageResource(resid);

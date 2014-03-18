@@ -51,6 +51,7 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 
 	private int curMap;
 	private CostInfoBean costInfo;
+	private boolean needShowDialogWhenMapLoaded;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,9 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		String cmpName = getActivity().getIntent().getData()
 				.getQueryParameter("companyname");
 		openCurCmpByName(cmpName);
+		if (needShowDialogWhenMapLoaded) {
+			openCurCmp(costInfo);
+		}
 	}
 
 	@Override
@@ -192,11 +196,11 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 		checkPosition((int) (x * map.getMapWidth()),
 				(int) (y * map.getMapHeight()));
 
-		Toast.makeText(
-				getActivity(),
-				"x:" + (int) (x * map.getMapWidth()) + " ,y:"
-						+ (int) (y * map.getMapHeight()), Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(
+//				getActivity(),
+//				"x:" + (int) (x * map.getMapWidth()) + " ,y:"
+//						+ (int) (y * map.getMapHeight()), Toast.LENGTH_SHORT)
+//				.show();
 	}
 
 	private boolean checkPosition(int x, int y) {
@@ -216,6 +220,11 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 	}
 
 	private void showPopupDialog(final CompanyPosBean cp) {
+		if (!map.isMapLoaded()) {
+			needShowDialogWhenMapLoaded = true;
+			return;
+		}
+		
 		final Dialog dialog = new Dialog(getActivity(), R.style.MapPopUpDialog);
 		dialog.setContentView(R.layout.dialog_map_popup);
 		((TextView) dialog.findViewById(R.id.title)).setText(cp.companyname);

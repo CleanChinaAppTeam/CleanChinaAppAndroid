@@ -13,6 +13,12 @@ public class CompanyMapView extends PhotoView {
 
 	private int mapWidth;
 	private int mapHeight;
+	
+	private boolean mapLoaded;
+	
+	public boolean isMapLoaded() {
+		return mapLoaded;
+	}
 
 	public int getMapWidth() {
 		return mapWidth;
@@ -52,6 +58,7 @@ public class CompanyMapView extends PhotoView {
 	@Override
 	public void onRequestFinish(Request req, Response response) {
 		super.onRequestFinish(req, response);
+		mapLoaded = true;
 		if (mapLoadListener != null) {
 			mapLoadListener.onMapLoaded();
 		}

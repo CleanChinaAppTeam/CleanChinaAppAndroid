@@ -102,10 +102,10 @@ public class CompanyDetailActivity extends CCActivity implements
 				sb.append("电话：" + result.tele + "\n");
 			}
 			if (!TextUtils.isEmpty(result.address)) {
-				sb.append("地址：" + result.tele + "\n");
+				sb.append("地址：" + result.address + "\n");
 			}
 			if (!TextUtils.isEmpty(result.location)) {
-				sb.append("位置：" + result.tele + "\n");
+				sb.append("位置：" + result.location + "\n");
 			}
 			infoView.setText(sb.toString());
 			if (!TextUtils.isEmpty(result.summary)) {

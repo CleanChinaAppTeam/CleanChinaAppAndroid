@@ -308,6 +308,10 @@ public class MapFragment extends CCFragment implements OnPhotoTapListener,
 
 				if (costInfo != null) {
 					openCurCmp(costInfo);
+				} else {
+					String cmpName = getActivity().getIntent().getData()
+							.getQueryParameter("companyname");
+					openCurCmpByName(cmpName);
 				}
 			}
 		}

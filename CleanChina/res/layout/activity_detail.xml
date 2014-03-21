@@ -29,10 +29,11 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bg_blue"
                 android:drawableRight="@drawable/ic_arrow_r"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="2dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="6dp"
                 android:textColor="@android:color/white"
                 android:textSize="12dp" />
         </LinearLayout>

@@ -11,7 +11,31 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/cost"
+            android:src="@drawable/cost1"
+            android:scaleType="matrix" />
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cost2"
+            android:scaleType="matrix" />
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cost3"
+            android:scaleType="matrix" />
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cost4"
+            android:scaleType="matrix" />
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cost5"
             android:scaleType="matrix" />
 
     </LinearLayout>
